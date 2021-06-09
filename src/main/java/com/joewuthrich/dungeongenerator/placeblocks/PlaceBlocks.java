@@ -36,15 +36,12 @@ public class PlaceBlocks {
     }
 
     public static void fillBlocks(World w, int[] seCorner, int[] nwCorner) {
-
-        int extraSize = 40;
+        int extraSize = 10;
 
         for (int x = nwCorner[0] - extraSize; x <= seCorner[0] + extraSize; x++) {
             for (int z = nwCorner[1] - extraSize; z <= seCorner[1] + extraSize; z++) {
                 w.getBlockAt(x, 100, z).setType(Material.BLACK_CONCRETE);
             }
         }
-
-        return;
     }
 }

@@ -20,13 +20,15 @@ public class CollisionDetection {
             room1 = roomList[collision[0]];
             room2 = roomList[collision[1]];
 
+            if (room1 == room2) {
+                break;
+            }
+
             coords1 = room1.getCoordinates();
             coords2 = room2.getCoordinates();
 
             distance1 = Math.sqrt(((coords1[0] - circleX) * (coords1[0] - circleX)) + ((coords1[1] - circleY) * (coords1[1] - circleY)));
             distance2 = Math.sqrt(((coords2[0] - circleX) * (coords2[0] - circleX)) + ((coords2[1] - circleY) * (coords2[1] - circleY)));
-
-            System.out.println(distance1 + " vs " + distance2);
 
             if (distance1 < distance2) {
                 roomList[collision[1]] = seperateRooms(room2, circleX, circleY, distance2);
@@ -54,8 +56,6 @@ public class CollisionDetection {
         int newY = (int) Math.round(y + (y - circleY) / distance * 8);
 
         moveRoom.setCoordinates(newX, newY);
-
-        System.out.println("---" + x + "," + y + " to " + newX + "," + newY);
 
         return moveRoom;
     }

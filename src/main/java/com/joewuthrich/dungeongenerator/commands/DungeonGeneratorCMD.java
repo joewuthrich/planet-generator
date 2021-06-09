@@ -29,8 +29,10 @@ public class DungeonGeneratorCMD implements CommandExecutor {
         Room[] roomList = generateRooms(numRooms, radius, centerX,
                 centerY, minRoomLength, maxRoomLength);
 
-        int[] seCorner = {centerX + radius * 2, centerY + radius * 2};
-        int[] nwCorner = {centerX - radius * 2, centerY - radius * 2};
+        int[] seCorner = {centerX + (radius * 2), centerY + (radius * 2)};
+        int[] nwCorner = {centerX - (radius * 2), centerY - (radius * 2)};
+
+        System.out.println(seCorner[0] + "," + seCorner[1] + "SE, " + nwCorner[0] + "," + nwCorner[1] + "NW");
 
         AbstractMap.SimpleEntry<int[][], Integer> c;
         int[][] collisions;
