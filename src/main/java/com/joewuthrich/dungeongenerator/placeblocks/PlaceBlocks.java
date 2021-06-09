@@ -17,15 +17,22 @@ public class PlaceBlocks {
 
         fillBlocks(w, seCorner, nwCorner);
 
+        Material m;
+
         for (Room room : roomList) {
             coordinates = room.getCoordinates();
             length = room.getLengthX();
             width = room.getLengthY();
 
+            if (room.isUsed())
+                m = Material.GREEN_CONCRETE;
+            else
+                m = Material.WHITE_CONCRETE;
+
             for (int x = coordinates[0]; x < coordinates[0] + length; x++) {
                 for (int y = coordinates[1]; y < coordinates[1] + width; y++) {
                     if (w.getBlockAt(x, 100, y).getType() == Material.BLACK_CONCRETE)
-                        w.getBlockAt(x, 100, y).setType(Material.WHITE_CONCRETE);
+                        w.getBlockAt(x, 100, y).setType(m);
                     else
                         w.getBlockAt(x, 100, y).setType(Material.RED_CONCRETE);
                 }
@@ -36,7 +43,7 @@ public class PlaceBlocks {
     }
 
     public static void fillBlocks(World w, int[] seCorner, int[] nwCorner) {
-        int extraSize = 10;
+        int extraSize = 50;
 
         for (int x = nwCorner[0] - extraSize; x <= seCorner[0] + extraSize; x++) {
             for (int z = nwCorner[1] - extraSize; z <= seCorner[1] + extraSize; z++) {

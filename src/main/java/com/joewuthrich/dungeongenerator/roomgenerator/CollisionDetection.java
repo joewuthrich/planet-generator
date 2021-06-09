@@ -31,9 +31,9 @@ public class CollisionDetection {
             distance2 = Math.sqrt(((coords2[0] - circleX) * (coords2[0] - circleX)) + ((coords2[1] - circleY) * (coords2[1] - circleY)));
 
             if (distance1 < distance2) {
-                roomList[collision[1]] = seperateRooms(room2, circleX, circleY, distance2);
+                roomList[collision[1]] = separateRooms(room2, circleX, circleY, distance2);
             } else {
-                roomList[collision[0]] = seperateRooms(room1, circleX, circleY, distance1);
+                roomList[collision[0]] = separateRooms(room1, circleX, circleY, distance1);
             }
         }
         return roomList;
@@ -47,7 +47,7 @@ public class CollisionDetection {
      * @param distance the distance away from the center the room is
      * @return the room at a new set of coordinates
      */
-    public static Room seperateRooms(Room moveRoom, int circleX, int circleY, double distance) {
+    public static Room separateRooms(Room moveRoom, int circleX, int circleY, double distance) {
         int[] coordinates = moveRoom.getCoordinates();
         int x = coordinates[0];
         int y = coordinates[1];

@@ -17,7 +17,7 @@ public class GenerateRooms {
 
         for (int i = 0; i < roomCount; i++) {
             coordinates = getPoint(radius, circleX, circleY);
-            roomList[i] = new Room(coordinates[0], coordinates[1], minRoomLength, maxRoomLength);
+            roomList[i] = new Room(i, coordinates[0], coordinates[1], minRoomLength, maxRoomLength);
         }
 
         return roomList;

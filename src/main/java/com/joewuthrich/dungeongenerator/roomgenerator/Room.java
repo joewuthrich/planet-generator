@@ -9,17 +9,24 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Room {
 
+    public final int roomID;
     int northWestX;
     int northWestZ;
     int lengthX;
     int lengthZ;
+    int size;
+    boolean currentlyUsed = false;
 
-    public Room(int newNorthWestX, int newNorthWestZ, int minRoomSize, int maxRoomSize) {
+    public Room(int newRoomID, int newNorthWestX, int newNorthWestZ, int minRoomSize, int maxRoomSize) {
+        roomID = newRoomID;
+
         northWestX = newNorthWestX;
         northWestZ = newNorthWestZ;
 
         lengthX = ThreadLocalRandom.current().nextInt(maxRoomSize - minRoomSize) + minRoomSize;
         lengthZ = ThreadLocalRandom.current().nextInt(maxRoomSize - minRoomSize) + minRoomSize;
+
+        size = lengthX * lengthZ;
     }
 
     public void setCoordinates(int newNorthWestX, int newNorthWestZ) {
@@ -38,5 +45,11 @@ public class Room {
     public int getLengthY() {
         return lengthZ;
     }
+
+    public void setUsed(boolean value) { currentlyUsed = value; }
+
+    public boolean isUsed() { return currentlyUsed; }
+
+    public int getSize() { return size; }
 }
 

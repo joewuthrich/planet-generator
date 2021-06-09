@@ -2,6 +2,11 @@ package com.joewuthrich.dungeongenerator.commands;
 
 import com.joewuthrich.dungeongenerator.roomgenerator.Room;
 import java.util.AbstractMap;
+import java.util.List;
+import java.util.Vector;
+
+import com.joewuthrich.dungeongenerator.roomgenerator.triangulator.NotEnoughPointsException;
+import com.joewuthrich.dungeongenerator.roomgenerator.triangulator.Triangle2D;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,6 +16,8 @@ import org.jetbrains.annotations.NotNull;
 import static com.joewuthrich.dungeongenerator.placeblocks.PlaceBlocks.placeBlocks;
 import static com.joewuthrich.dungeongenerator.roomgenerator.CollisionDetection.*;
 import static com.joewuthrich.dungeongenerator.roomgenerator.GenerateRooms.generateRooms;
+import static com.joewuthrich.dungeongenerator.roomgenerator.RoomPicker.chooseRooms;
+import static com.joewuthrich.dungeongenerator.roomgenerator.Triangulation.triangulateEdges;
 
 public class DungeonGeneratorCMD implements CommandExecutor {
 
@@ -43,12 +50,23 @@ public class DungeonGeneratorCMD implements CommandExecutor {
             collisions = c.getKey();
             numCollisions = c.getValue();
 
-            if (numCollisions != 0) {
+            if (numCollisions != 0)
                 roomList = resolveCollisions(roomList, collisions, centerX, centerY);
-
-                System.out.println("Resolved " + numCollisions + " collisions");
-            }
         } while (numCollisions != 0);
+
+        roomList = chooseRooms(roomList);
+
+        List<Triangle2D> triangleSoup = null;
+
+        try {
+            triangleSoup = triangulateEdges(roomList);
+        } catch (NotEnoughPointsException e) {
+            e.printStackTrace();
+        }
+
+        for (Triangle2D triangle : triangleSoup) {
+            System.out.println(triangle.toString());
+        }
 
         placeBlocks(roomList, seCorner, nwCorner);
 
