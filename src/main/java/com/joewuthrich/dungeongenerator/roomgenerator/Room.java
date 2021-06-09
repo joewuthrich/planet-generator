@@ -5,46 +5,46 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * The room object.
  *
- * Contains coordinates for it's bottom left corner, as well as height and width.
+ * Contains coordinates for it's north-west corner (the smallest coordinates), as well as height and width.
  */
 public class Room {
 
-    int bottomLeftX;
-    int bottomLeftY;
-    int height;
-    int width;
+    int northWestX;
+    int northWestZ;
+    int lengthX;
+    int lengthZ;
 
-    public Room(int newBottomLeftX, int newBottomLeftY, int minRoomSize, int maxRoomSize) {
-        bottomLeftX = newBottomLeftX;
-        bottomLeftY = newBottomLeftY;
+    public Room(int newNorthWestX, int newNorthWestZ, int minRoomSize, int maxRoomSize) {
+        northWestX = newNorthWestX;
+        northWestZ = newNorthWestZ;
 
-        height = ThreadLocalRandom.current().nextInt(maxRoomSize - minRoomSize) + minRoomSize;
-        width = ThreadLocalRandom.current().nextInt(maxRoomSize - minRoomSize) + minRoomSize;
+        lengthX = ThreadLocalRandom.current().nextInt(maxRoomSize - minRoomSize) + minRoomSize;
+        lengthZ = ThreadLocalRandom.current().nextInt(maxRoomSize - minRoomSize) + minRoomSize;
     }
 
-    public void setCoordinates(int newBottomLeftX, int newBottomLeftY) {
-        bottomLeftX = newBottomLeftX;
-        bottomLeftY = newBottomLeftY;
+    public void setCoordinates(int newNorthWestX, int newNorthWestZ) {
+        northWestX = newNorthWestX;
+        northWestZ = newNorthWestZ;
     }
 
-    public void setHeight(int newHeight) {
-        height = newHeight;
+    public void setLengthX(int newHeight) {
+        lengthX = newHeight;
     }
 
-    public void setWidth(int newWidth) {
-        width = newWidth;
+    public void setLengthZ(int newWidth) {
+        lengthZ = newWidth;
     }
 
     public int[] getCoordinates() {
-        return new int[] {bottomLeftX, bottomLeftY};
+        return new int[] {northWestX, northWestZ};
     }
 
-    public int getHeight() {
-        return height;
+    public int getLengthX() {
+        return lengthX;
     }
 
-    public int getWidth() {
-        return width;
+    public int getLengthY() {
+        return lengthZ;
     }
 }
 

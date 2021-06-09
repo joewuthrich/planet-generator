@@ -19,8 +19,8 @@ public class PlaceBlocks {
 
         for (int i = 0; i < roomList.length; i++) {
             coordinates = roomList[i].getCoordinates();
-            length = roomList[i].getHeight();
-            width = roomList[i].getWidth();
+            length = roomList[i].getLengthX();
+            width = roomList[i].getLengthY();
 
             for (int x = coordinates[0]; x < coordinates[0] + length; x++) {
                 for (int y = coordinates[1]; y < coordinates[1] + width; y++) {
