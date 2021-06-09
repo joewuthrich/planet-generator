@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import static com.joewuthrich.dungeongenerator.placeblocks.PlaceBlocks.placeBlocks;
 import static com.joewuthrich.dungeongenerator.roomgenerator.CollisionDetection.*;
@@ -14,27 +15,40 @@ import static com.joewuthrich.dungeongenerator.roomgenerator.GenerateRooms.gener
 public class DungeonGeneratorCMD implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (!(sender instanceof Player))
             return false;
 
-        Room[] roomList = generateRooms(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]),
-                Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]));
+        int numRooms = Integer.parseInt(args[0]);
+        int radius = numRooms * 3;
+        int centerX = Integer.parseInt(args[1]);
+        int centerY = Integer.parseInt(args[2]);
+        int minRoomLength = Integer.parseInt(args[3]);
+        int maxRoomLength = Integer.parseInt(args[4]);
 
-        int[] seCorner = {Integer.parseInt(args[2]) + Integer.parseInt(args[1]), Integer.parseInt(args[3]) + Integer.parseInt(args[1])};
-        int[] nwCorner = {Integer.parseInt(args[2]) - Integer.parseInt(args[1]), Integer.parseInt(args[3]) - Integer.parseInt(args[1])};
+        Room[] roomList = generateRooms(numRooms, radius, centerX,
+                centerY, minRoomLength, maxRoomLength);
+
+        int[] seCorner = {centerX + radius * 2, centerY + radius * 2};
+        int[] nwCorner = {centerX - radius * 2, centerY - radius * 2};
+
+        AbstractMap.SimpleEntry<int[][], Integer> c;
+        int[][] collisions;
+        int numCollisions;
+
+        do {
+            c = checkCollisions(roomList);
+            collisions = c.getKey();
+            numCollisions = c.getValue();
+
+            if (numCollisions != 0) {
+                roomList = resolveCollisions(roomList, collisions, centerX, centerY);
+
+                System.out.println("Resolved " + numCollisions + " collisions");
+            }
+        } while (numCollisions != 0);
 
         placeBlocks(roomList, seCorner, nwCorner);
-
-        AbstractMap.SimpleEntry<int[][], Integer> c = checkCollisions(roomList);
-        int[][] collisions = c.getKey();
-        int numCollisions = c.getValue();
-
-        Player p = (Player) sender;
-
-        for (int i = 0; i < numCollisions; i++) {
-            p.sendMessage("Collision between " + (collisions[i][0]) + " and " + (collisions[i][1]));
-        }
 
         return true;
     }

@@ -27,14 +27,6 @@ public class Room {
         northWestZ = newNorthWestZ;
     }
 
-    public void setLengthX(int newHeight) {
-        lengthX = newHeight;
-    }
-
-    public void setLengthZ(int newWidth) {
-        lengthZ = newWidth;
-    }
-
     public int[] getCoordinates() {
         return new int[] {northWestX, northWestZ};
     }

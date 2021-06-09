@@ -2,25 +2,25 @@ package com.joewuthrich.dungeongenerator.placeblocks;
 
 import com.joewuthrich.dungeongenerator.roomgenerator.Room;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.checkerframework.checker.units.qual.min;
 
 public class PlaceBlocks {
     public static boolean placeBlocks(Room[] roomList, int[] seCorner, int[] nwCorner) {
 
         World w = Bukkit.getServer().getWorld("world");
+        assert w != null;
+
         int[] coordinates;
         int length;
         int width;
 
         fillBlocks(w, seCorner, nwCorner);
 
-        for (int i = 0; i < roomList.length; i++) {
-            coordinates = roomList[i].getCoordinates();
-            length = roomList[i].getLengthX();
-            width = roomList[i].getLengthY();
+        for (Room room : roomList) {
+            coordinates = room.getCoordinates();
+            length = room.getLengthX();
+            width = room.getLengthY();
 
             for (int x = coordinates[0]; x < coordinates[0] + length; x++) {
                 for (int y = coordinates[1]; y < coordinates[1] + width; y++) {
@@ -35,7 +35,7 @@ public class PlaceBlocks {
         return true;
     }
 
-    public static boolean fillBlocks(World w, int[] seCorner, int[] nwCorner) {
+    public static void fillBlocks(World w, int[] seCorner, int[] nwCorner) {
 
         int extraSize = 40;
 
@@ -45,6 +45,6 @@ public class PlaceBlocks {
             }
         }
 
-        return true;
+        return;
     }
 }

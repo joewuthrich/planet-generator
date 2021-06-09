@@ -30,5 +30,4 @@ public class GenerateRooms {
         int y = (int) Math.round(circleY + len * Math.sin(deg));
         return new int[] {x, y};
     }
-
 }
