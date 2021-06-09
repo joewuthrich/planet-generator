@@ -1,0 +1,6 @@
+name: DungeonGenerator
+version: ${project.version}
+main: com.joewuthrich.dungeongenerator.dungeongenerator.DungeonGenerator
+api-version: 1.16
+authors: [ joewuthrich ]
+description: Generate a random dungeon in Minecraft with rooms and passageways.
