@@ -20,9 +20,9 @@ public class Triangulation {
      * @return a list of all edges in the triangulation
      * @throws NotEnoughPointsException if there are less than three points.
      */
-    public static Edge[] triangulateEdges(Room[] roomList) throws NotEnoughPointsException {
+    public static List<Edge> triangulateEdges(Room[] roomList) throws NotEnoughPointsException {
 
-        Vector<Vector2D> pointSet = new Vector<Vector2D>();
+        Vector<Vector2D> pointSet = new Vector<>();
 
         Coordinate c;
         for (Room room : roomList) {
@@ -50,7 +50,7 @@ public class Triangulation {
             }
         }
 
-        return edges.toArray(new Edge[0]);
+        return edges;
     }
 
     /**

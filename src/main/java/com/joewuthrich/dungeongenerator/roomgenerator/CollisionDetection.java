@@ -35,10 +35,8 @@ public class CollisionDetection {
 
             if (distance1 < distance2) {
                 roomList[collision[1]] = separateRooms(room2, circleX, circleZ, distance2);
-                System.out.println("Moving room " + room2.roomID + " to " + room2.getCoordinates().x + "," + room2.getCoordinates().z + " to avoid " + room1.roomID + " at " + room1.getCoordinates().x + "," + room1.getCoordinates().z);
             } else {
                 roomList[collision[0]] = separateRooms(room1, circleX, circleZ, distance1);
-                System.out.println("Moving room " + room1.roomID + " to " + room1.getCoordinates().x + "," + room1.getCoordinates().z + " to avoid " + room2.roomID + " at " + room2.getCoordinates().x + "," + room2.getCoordinates().z);
             }
         }
         return roomList;

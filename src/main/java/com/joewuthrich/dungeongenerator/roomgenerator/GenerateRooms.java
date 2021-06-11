@@ -21,7 +21,6 @@ public class GenerateRooms {
         for (int i = 0; i < roomList.length; i++) {
             coordinates = getCoordinate(radius, circleX, circleY);
             roomList[i] = new Room(i, coordinates.x, coordinates.z, minRoomLength, maxRoomLength);
-            System.out.println(coordinates.x + "," + coordinates.z);
         }
 
         return roomList;

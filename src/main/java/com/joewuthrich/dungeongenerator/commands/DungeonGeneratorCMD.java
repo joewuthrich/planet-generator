@@ -19,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.joewuthrich.dungeongenerator.placeblocks.PlaceBlocks.placeBlocks;
 import static com.joewuthrich.dungeongenerator.roomgenerator.CollisionDetection.*;
 import static com.joewuthrich.dungeongenerator.roomgenerator.GenerateRooms.generateRooms;
+import static com.joewuthrich.dungeongenerator.roomgenerator.MST.generateMST;
 import static com.joewuthrich.dungeongenerator.roomgenerator.RoomPicker.chooseRooms;
 import static com.joewuthrich.dungeongenerator.roomgenerator.Triangulation.triangulateEdges;
 
@@ -54,7 +55,6 @@ public class DungeonGeneratorCMD implements CommandExecutor {
             if (numCollisions != 0)
                 roomList = resolveCollisions(roomList, collisions, centerX, centerY);
 
-            System.out.println(numCollisions + " collisions");
         } while (numCollisions != 0);
 
         roomList = chooseRooms(roomList);
@@ -62,11 +62,18 @@ public class DungeonGeneratorCMD implements CommandExecutor {
         List<Edge> edges = new ArrayList<>();
 
         try {
-            edges = Arrays.asList(triangulateEdges(roomList));
+            edges = triangulateEdges(roomList);
         } catch (NotEnoughPointsException e) {
             e.printStackTrace();
         }
 
+        edges = generateMST(edges, roomList);
+
+        /*
+        for (Edge edge : edges) {
+            System.out.println(edge.toString());
+        }
+        */
         placeBlocks(roomList, seCorner, nwCorner);
 
         return true;

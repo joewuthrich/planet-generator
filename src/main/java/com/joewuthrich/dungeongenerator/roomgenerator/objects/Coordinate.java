@@ -16,4 +16,8 @@ public class Coordinate {
         this.y = _y;
         this.z = _z;
     }
+
+    public String toString2D() {
+        return x + "," + z;
+    }
 }
