@@ -1,6 +1,12 @@
 name: DungeonGenerator
 version: ${project.version}
-main: com.joewuthrich.dungeongenerator.dungeongenerator.DungeonGenerator
+main: com.joewuthrich.dungeongenerator.DungeonGenerator
 api-version: 1.16
 authors: [ joewuthrich ]
 description: Generate a random dungeon in Minecraft with rooms and passageways.
+
+commands:
+  dungeongenerator:
+    description: The basic DungeonGenerator comand
+    usage: /dg [roomCount] [circleX] [circleY] [minRoomLength] [maxRoomLength]
+    aliases: dg

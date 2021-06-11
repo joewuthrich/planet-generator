@@ -111,3 +111,7 @@ buildNumber.properties
 
 # Common working directory
 run/
+
+# Triangulation library
+/src/main/java/com/joewuthrich/dungeongenerator/roomgenerator/triangulator/
+/src/main/resources/
