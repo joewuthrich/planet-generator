@@ -1,7 +1,5 @@
 package com.joewuthrich.dungeongenerator.roomgenerator.objects;
 
-import org.checkerframework.checker.units.qual.C;
-
 import java.util.concurrent.ThreadLocalRandom;
 
 /**

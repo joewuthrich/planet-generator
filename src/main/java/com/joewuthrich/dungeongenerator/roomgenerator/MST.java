@@ -4,16 +4,14 @@ import com.joewuthrich.dungeongenerator.roomgenerator.objects.Coordinate;
 import com.joewuthrich.dungeongenerator.roomgenerator.objects.Edge;
 import com.joewuthrich.dungeongenerator.roomgenerator.objects.Room;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MST {
 
-    public static List<Edge> generateMST(List<Edge> edges1, Room[] roomList) {
+    public static List<Edge> generateMST(List<Edge> edges, Room[] roomList) {
         double smallest = Double.MAX_VALUE;
 
-        List<Edge> edges = new ArrayList(edges1);
         Edge currentEdge = edges.get(0);
         List<Coordinate> coords = new ArrayList<>();
         List<Edge> MSTEdges = new ArrayList<>();
@@ -21,11 +19,11 @@ public class MST {
         Coordinate coordinate = roomList[0].getCoordinates();
 
         for (int i = 0; i < roomList.length - 1; i++) {
-            for (int j = 0; j < edges.size(); j++) {
+            for (Edge edge : edges) {
                 for (Coordinate c : coords) {
-                    if (edges.get(j).containsCoordinate(c) && edges.get(j).getDistance() < smallest) {
-                        smallest = edges.get(j).getDistance();
-                        currentEdge = edges.get(j);
+                    if (edge.containsCoordinate(c) && edge.getDistance() < smallest) {
+                        smallest = edge.getDistance();
+                        currentEdge = edge;
                         coordinate = c;
                     }
                 }

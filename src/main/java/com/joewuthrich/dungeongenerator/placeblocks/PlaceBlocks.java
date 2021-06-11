@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 
 public class PlaceBlocks {
-    public static boolean placeBlocks(Room[] roomList, int[] seCorner, int[] nwCorner) {
+    public static boolean placeBlocks(Room[] roomList, Coordinate seCorner, Coordinate nwCorner) {
 
         World w = Bukkit.getServer().getWorld("world");
         assert w != null;
@@ -43,11 +43,11 @@ public class PlaceBlocks {
         return true;
     }
 
-    public static void fillBlocks(World w, int[] seCorner, int[] nwCorner) {
+    public static void fillBlocks(World w, Coordinate seCorner, Coordinate nwCorner) {
         int extraSize = 50;
 
-        for (int x = nwCorner[0] - extraSize; x <= seCorner[0] + extraSize; x++) {
-            for (int z = nwCorner[1] - extraSize; z <= seCorner[1] + extraSize; z++) {
+        for (int x = nwCorner.x - extraSize; x <= seCorner.x + extraSize; x++) {
+            for (int z = nwCorner.z - extraSize; z <= seCorner.z + extraSize; z++) {
                 w.getBlockAt(x, 100, z).setType(Material.BLACK_CONCRETE);
             }
         }

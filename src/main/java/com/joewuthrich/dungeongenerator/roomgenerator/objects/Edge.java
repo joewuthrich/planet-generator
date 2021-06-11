@@ -38,4 +38,18 @@ public class Edge {
         else
             return a;
     }
+
+    /**
+     * @return the smallest x value in the edge
+     */
+    public int smallestX() {
+        return (a.x > b.x ? b.x : a.x);
+    }
+
+    /**
+     * @return the smallest z value in the edge
+     */
+    public int smallestZ() {
+        return (a.z > b.z ? b.z : a.z);
+    }
 }

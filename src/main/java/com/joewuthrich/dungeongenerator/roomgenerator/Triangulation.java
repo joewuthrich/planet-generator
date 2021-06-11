@@ -9,6 +9,7 @@ import com.joewuthrich.dungeongenerator.roomgenerator.triangulator.Triangle2D;
 import com.joewuthrich.dungeongenerator.roomgenerator.triangulator.Vector2D;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Vector;
 import java.util.List;
 
@@ -21,7 +22,6 @@ public class Triangulation {
      * @throws NotEnoughPointsException if there are less than three points.
      */
     public static List<Edge> triangulateEdges(Room[] roomList) throws NotEnoughPointsException {
-
         Vector<Vector2D> pointSet = new Vector<>();
 
         Coordinate c;
@@ -44,11 +44,15 @@ public class Triangulation {
             edgeArray[1] = getEdge(triangle.b, triangle.c);
             edgeArray[2] = getEdge(triangle.c, triangle.a);
 
+            System.out.println(Arrays.toString(edgeArray));
+
             for (Edge edge : edgeArray) {
                 if (!containsEdge(edges, edge))
                     edges.add(edge);
             }
         }
+
+        System.out.println(edges);
 
         return edges;
     }
