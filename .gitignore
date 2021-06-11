@@ -113,4 +113,5 @@ buildNumber.properties
 run/
 
 # Triangulation library
-src/main/java/com/joewuthrich/dungeongenerator/roomgenerator/triangulator
+/src/main/java/com/joewuthrich/dungeongenerator/roomgenerator/triangulator/
+/src/main/resources/

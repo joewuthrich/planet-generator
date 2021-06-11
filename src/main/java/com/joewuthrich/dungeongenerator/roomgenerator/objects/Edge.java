@@ -1,5 +1,7 @@
 package com.joewuthrich.dungeongenerator.roomgenerator.objects;
 
+import java.util.List;
+
 public class Edge {
     public Coordinate a;
     public Coordinate b;
@@ -28,6 +30,23 @@ public class Edge {
     }
 
     /**
+     * Check if the edge contains more than one coordinate from a list
+     */
+    public boolean containsMultipleCoordinates(List<Coordinate> coordinates) {
+        int i = 0;
+        for (Coordinate c : coordinates) {
+            if (c == null)
+                return (i > 1);
+
+            if (containsCoordinate(c))
+                i++;
+        }
+
+
+        return (i > 1);
+    }
+
+    /**
      * Get the opposing coordinate
      * @param c the first coordinate
      * @return the other coordinate
@@ -43,13 +62,13 @@ public class Edge {
      * @return the smallest x value in the edge
      */
     public int smallestX() {
-        return (a.x > b.x ? b.x : a.x);
+        return (Math.min(a.x, b.x));
     }
 
     /**
      * @return the smallest z value in the edge
      */
     public int smallestZ() {
-        return (a.z > b.z ? b.z : a.z);
+        return (Math.min(a.z, b.z));
     }
 }
