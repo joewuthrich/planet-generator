@@ -7,7 +7,6 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.joewuthrich.dungeongenerator.roomgenerator.triangulator.NotEnoughPointsException;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,11 +16,8 @@ import org.jetbrains.annotations.NotNull;
 import static com.joewuthrich.dungeongenerator.placeblocks.PlaceBlocks.placeBlocks;
 import static com.joewuthrich.dungeongenerator.placeblocks.PlaceLine.placeLines;
 import static com.joewuthrich.dungeongenerator.roomgenerator.CollisionDetection.*;
+import static com.joewuthrich.dungeongenerator.roomgenerator.Connections.getConnections;
 import static com.joewuthrich.dungeongenerator.roomgenerator.GenerateRooms.generateRooms;
-import static com.joewuthrich.dungeongenerator.roomgenerator.MST.addEdges;
-import static com.joewuthrich.dungeongenerator.roomgenerator.MST.generateMST;
-import static com.joewuthrich.dungeongenerator.roomgenerator.RoomPicker.chooseRooms;
-import static com.joewuthrich.dungeongenerator.roomgenerator.Triangulation.triangulateEdges;
 
 public class DungeonGeneratorCMD implements CommandExecutor {
 
@@ -43,63 +39,40 @@ public class DungeonGeneratorCMD implements CommandExecutor {
         int minRoomLength = Integer.parseInt(args[3]);
         int maxRoomLength = Integer.parseInt(args[4]);
 
-        int numEdges;
-        Room[] roomList = new Room[0];
+        Room[] roomList;
 
-        List<Edge> edges = new ArrayList<>();
-        Coordinate seCorner = null, nwCorner = null;
-        List<Edge> MSTEdges = new ArrayList<>();
+        Coordinate seCorner, nwCorner;
 
-        int q = 0;
+        roomList = generateRooms(numRooms, radius, centerX,
+                centerY, minRoomLength, maxRoomLength);
 
-        while (MSTEdges.size() != roomList.length - 1 && q < 50) {
-            numEdges = 0;
-            while (numEdges < numRooms) {
-                roomList = generateRooms(numRooms, radius, centerX,
-                        centerY, minRoomLength, maxRoomLength);
+        seCorner = new Coordinate(centerX + (radius * 2), centerY + (radius * 2));
+        nwCorner = new Coordinate(centerX - (radius * 2), centerY - (radius * 2));
 
-                seCorner = new Coordinate(centerX + (radius * 2), centerY + (radius * 2));
-                nwCorner = new Coordinate(centerX - (radius * 2), centerY - (radius * 2));
+        AbstractMap.SimpleEntry<int[][], Integer> c;
+        int[][] collisions;
+        int numCollisions;
 
-                AbstractMap.SimpleEntry<int[][], Integer> c;
-                int[][] collisions;
-                int numCollisions;
+        do {
+            c = checkCollisions(roomList);
+            collisions = c.getKey();
+            numCollisions = c.getValue();
 
-                do {
-                    c = checkCollisions(roomList);
-                    collisions = c.getKey();
-                    numCollisions = c.getValue();
-
-                    if (numCollisions != 0) {
-                        resolveCollisions(roomList, collisions, centerX, centerY);
-                    }
-
-                } while (numCollisions != 0);
-
-                //chooseRooms(roomList);
-
-                try {
-                    edges = triangulateEdges(roomList);
-                } catch (NotEnoughPointsException e) {
-                    e.printStackTrace();
-                }
-
-                numEdges = edges.size();
+            if (numCollisions != 0) {
+                resolveCollisions(roomList, collisions, centerX, centerY);
             }
 
-            MSTEdges = generateMST(edges, roomList);
-            q++;
-        }
+        } while (numCollisions != 0);
 
-        if (q == 50) {
-            sender.sendMessage("room creation failed");
-            return false;
-        }
+        //chooseRooms(roomList);
 
-        addEdges(edges, MSTEdges);
+        List<Edge> edges = new ArrayList<>();
+        edges = getConnections(roomList);
+
+        //addEdges(edges, MSTEdges);
 
         placeBlocks(roomList, seCorner, nwCorner);
-        placeLines(MSTEdges);
+        placeLines(edges);
 
         return true;
     }

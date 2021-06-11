@@ -5,6 +5,8 @@ public class Coordinate {
     public int y;
     public int z;
 
+    public int id;
+
     public Coordinate(int _x, int _z) {
         this.x = _x;
         this.y = 100;
@@ -17,7 +19,11 @@ public class Coordinate {
         this.z = _z;
     }
 
-    public String toString2D() {
+    public String toString() {
         return x + "," + z;
+    }
+
+    public boolean equals(Coordinate c) {
+        return (x == c.x && y == c.y && z == c.z);
     }
 }

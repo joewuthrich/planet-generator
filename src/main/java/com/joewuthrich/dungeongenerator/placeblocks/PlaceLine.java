@@ -25,11 +25,8 @@ public class PlaceLine {
             dz = edge.a.z - edge.b.z;
 
             if (dx == 0) {
-                for (int z = sz; z < sz + Math.abs(dz); z++) {
+                for (int z = sz; z < sz + Math.abs(dz); z++)
                     w.getBlockAt(edge.a.x, 100, z).setType(material);
-                    System.out.println(edge.a.x + "," + z + " X");
-                }
-                System.out.println("X: " + sz + " " + dz);
                 continue;
             }
 
