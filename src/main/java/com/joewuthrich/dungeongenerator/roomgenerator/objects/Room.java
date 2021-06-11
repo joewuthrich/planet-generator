@@ -1,4 +1,6 @@
-package com.joewuthrich.dungeongenerator.roomgenerator;
+package com.joewuthrich.dungeongenerator.roomgenerator.objects;
+
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -10,18 +12,16 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Room {
 
     public final int roomID;
-    int northWestX;
-    int northWestZ;
-    int lengthX;
-    int lengthZ;
+    Coordinate nwCorner;
+    public int lengthX;
+    public int lengthZ;
     int size;
     boolean currentlyUsed = false;
 
-    public Room(int newRoomID, int newNorthWestX, int newNorthWestZ, int minRoomSize, int maxRoomSize) {
-        roomID = newRoomID;
+    public Room(int _roomID, int _nwX, int _nwZ, int minRoomSize, int maxRoomSize) {
+        roomID = _roomID;
 
-        northWestX = newNorthWestX;
-        northWestZ = newNorthWestZ;
+        nwCorner = new Coordinate(_nwX, _nwZ);
 
         lengthX = ThreadLocalRandom.current().nextInt(maxRoomSize - minRoomSize) + minRoomSize;
         lengthZ = ThreadLocalRandom.current().nextInt(maxRoomSize - minRoomSize) + minRoomSize;
@@ -30,20 +30,12 @@ public class Room {
     }
 
     public void setCoordinates(int newNorthWestX, int newNorthWestZ) {
-        northWestX = newNorthWestX;
-        northWestZ = newNorthWestZ;
+        nwCorner.x = newNorthWestX;
+        nwCorner.z = newNorthWestZ;
     }
 
-    public int[] getCoordinates() {
-        return new int[] {northWestX, northWestZ};
-    }
-
-    public int getLengthX() {
-        return lengthX;
-    }
-
-    public int getLengthY() {
-        return lengthZ;
+    public Coordinate getCoordinates() {
+        return nwCorner;
     }
 
     public void setUsed(boolean value) { currentlyUsed = value; }

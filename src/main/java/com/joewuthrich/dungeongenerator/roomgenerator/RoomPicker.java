@@ -1,5 +1,7 @@
 package com.joewuthrich.dungeongenerator.roomgenerator;
 
+import com.joewuthrich.dungeongenerator.roomgenerator.objects.Room;
+
 public class RoomPicker {
 
     /**

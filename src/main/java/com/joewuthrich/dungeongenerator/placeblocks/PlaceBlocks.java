@@ -1,6 +1,7 @@
 package com.joewuthrich.dungeongenerator.placeblocks;
 
-import com.joewuthrich.dungeongenerator.roomgenerator.Room;
+import com.joewuthrich.dungeongenerator.roomgenerator.objects.Coordinate;
+import com.joewuthrich.dungeongenerator.roomgenerator.objects.Room;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -11,7 +12,7 @@ public class PlaceBlocks {
         World w = Bukkit.getServer().getWorld("world");
         assert w != null;
 
-        int[] coordinates;
+        Coordinate coordinates;
         int length;
         int width;
 
@@ -21,16 +22,16 @@ public class PlaceBlocks {
 
         for (Room room : roomList) {
             coordinates = room.getCoordinates();
-            length = room.getLengthX();
-            width = room.getLengthY();
+            length = room.lengthX;
+            width = room.lengthZ;
 
             if (room.isUsed())
                 m = Material.GREEN_CONCRETE;
             else
                 m = Material.WHITE_CONCRETE;
 
-            for (int x = coordinates[0]; x < coordinates[0] + length; x++) {
-                for (int y = coordinates[1]; y < coordinates[1] + width; y++) {
+            for (int x = coordinates.x; x < coordinates.x + length; x++) {
+                for (int y = coordinates.z; y < coordinates.z + width; y++) {
                     if (w.getBlockAt(x, 100, y).getType() == Material.BLACK_CONCRETE)
                         w.getBlockAt(x, 100, y).setType(m);
                     else

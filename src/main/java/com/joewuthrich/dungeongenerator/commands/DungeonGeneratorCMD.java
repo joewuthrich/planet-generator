@@ -1,9 +1,12 @@
 package com.joewuthrich.dungeongenerator.commands;
 
-import com.joewuthrich.dungeongenerator.roomgenerator.Room;
+import com.joewuthrich.dungeongenerator.roomgenerator.objects.Coordinate;
+import com.joewuthrich.dungeongenerator.roomgenerator.objects.Edge;
+import com.joewuthrich.dungeongenerator.roomgenerator.objects.Room;
 import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
 
 import com.joewuthrich.dungeongenerator.roomgenerator.triangulator.NotEnoughPointsException;
 import com.joewuthrich.dungeongenerator.roomgenerator.triangulator.Triangle2D;
@@ -39,8 +42,6 @@ public class DungeonGeneratorCMD implements CommandExecutor {
         int[] seCorner = {centerX + (radius * 2), centerY + (radius * 2)};
         int[] nwCorner = {centerX - (radius * 2), centerY - (radius * 2)};
 
-        System.out.println(seCorner[0] + "," + seCorner[1] + "SE, " + nwCorner[0] + "," + nwCorner[1] + "NW");
-
         AbstractMap.SimpleEntry<int[][], Integer> c;
         int[][] collisions;
         int numCollisions;
@@ -52,20 +53,18 @@ public class DungeonGeneratorCMD implements CommandExecutor {
 
             if (numCollisions != 0)
                 roomList = resolveCollisions(roomList, collisions, centerX, centerY);
+
+            System.out.println(numCollisions + " collisions");
         } while (numCollisions != 0);
 
         roomList = chooseRooms(roomList);
 
-        List<Triangle2D> triangleSoup = null;
+        List<Edge> edges = new ArrayList<>();
 
         try {
-            triangleSoup = triangulateEdges(roomList);
+            edges = Arrays.asList(triangulateEdges(roomList));
         } catch (NotEnoughPointsException e) {
             e.printStackTrace();
-        }
-
-        for (Triangle2D triangle : triangleSoup) {
-            System.out.println(triangle.toString());
         }
 
         placeBlocks(roomList, seCorner, nwCorner);

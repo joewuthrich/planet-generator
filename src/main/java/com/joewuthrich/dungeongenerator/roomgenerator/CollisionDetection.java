@@ -1,14 +1,17 @@
 package com.joewuthrich.dungeongenerator.roomgenerator;
 
+import com.joewuthrich.dungeongenerator.roomgenerator.objects.Coordinate;
+import com.joewuthrich.dungeongenerator.roomgenerator.objects.Room;
+
 import java.util.AbstractMap;
 
 public class CollisionDetection {
-    public static Room[] resolveCollisions(Room[] roomList, int[][] collisions, int circleX, int circleY) {
+    public static Room[] resolveCollisions(Room[] roomList, int[][] collisions, int circleX, int circleZ) {
         Room room1;
         Room room2;
 
-        int[] coords1;
-        int[] coords2;
+        Coordinate coords1;
+        Coordinate coords2;
 
         double distance1;
         double distance2;
@@ -27,13 +30,15 @@ public class CollisionDetection {
             coords1 = room1.getCoordinates();
             coords2 = room2.getCoordinates();
 
-            distance1 = Math.sqrt(((coords1[0] - circleX) * (coords1[0] - circleX)) + ((coords1[1] - circleY) * (coords1[1] - circleY)));
-            distance2 = Math.sqrt(((coords2[0] - circleX) * (coords2[0] - circleX)) + ((coords2[1] - circleY) * (coords2[1] - circleY)));
+            distance1 = Math.sqrt(Math.pow((coords1.x - circleX), 2) + Math.pow((coords1.z - circleZ), 2));
+            distance2 = Math.sqrt(Math.pow((coords2.x - circleX), 2) + Math.pow((coords2.z - circleZ), 2));
 
             if (distance1 < distance2) {
-                roomList[collision[1]] = separateRooms(room2, circleX, circleY, distance2);
+                roomList[collision[1]] = separateRooms(room2, circleX, circleZ, distance2);
+                System.out.println("Moving room " + room2.roomID + " to " + room2.getCoordinates().x + "," + room2.getCoordinates().z + " to avoid " + room1.roomID + " at " + room1.getCoordinates().x + "," + room1.getCoordinates().z);
             } else {
-                roomList[collision[0]] = separateRooms(room1, circleX, circleY, distance1);
+                roomList[collision[0]] = separateRooms(room1, circleX, circleZ, distance1);
+                System.out.println("Moving room " + room1.roomID + " to " + room1.getCoordinates().x + "," + room1.getCoordinates().z + " to avoid " + room2.roomID + " at " + room2.getCoordinates().x + "," + room2.getCoordinates().z);
             }
         }
         return roomList;
@@ -43,17 +48,15 @@ public class CollisionDetection {
      * Move a colliding room away from its collision
      * @param moveRoom the room to move
      * @param circleX the center X of the grid
-     * @param circleY the center Z of the grid
+     * @param circleZ the center Z of the grid
      * @param distance the distance away from the center the room is
      * @return the room at a new set of coordinates
      */
-    public static Room separateRooms(Room moveRoom, int circleX, int circleY, double distance) {
-        int[] coordinates = moveRoom.getCoordinates();
-        int x = coordinates[0];
-        int y = coordinates[1];
+    public static Room separateRooms(Room moveRoom, int circleX, int circleZ, double distance) {
+        Coordinate coordinates = moveRoom.getCoordinates();
 
-        int newX = (int) Math.round(x + (x - circleX) / distance * 8);
-        int newY = (int) Math.round(y + (y - circleY) / distance * 8);
+        int newX = (int) Math.round(coordinates.x + (coordinates.x - circleX) / distance * 8);
+        int newY = (int) Math.round(coordinates.z + (coordinates.z - circleZ) / distance * 8);
 
         moveRoom.setCoordinates(newX, newY);
 
@@ -90,17 +93,16 @@ public class CollisionDetection {
      * @return true if rooms collide, false if not
      */
     public static boolean detectCollision(Room room1, Room room2) {
+        Coordinate c1 = room1.getCoordinates();
+        Coordinate c2 = room2.getCoordinates();
 
-        int[] c1 = room1.getCoordinates();
-        int[] c2 = room2.getCoordinates();
-
-        int l1 = room1.getLengthX();
-        int w1 = room1.getLengthY();
-        int l2 = room2.getLengthX();
-        int w2 = room2.getLengthY();
+        int l1 = room1.lengthX;
+        int w1 = room1.lengthZ;
+        int l2 = room2.lengthX;
+        int w2 = room2.lengthZ;
 
         //  If there is a collision
-        return c1[0] < c2[0] + l2 && c1[0] + l1 > c2[0] && c1[1] < c2[1] + w2 && c1[1] + w1 > c2[1];
+        return (c1.x < c2.x + l2 && c1.x + l1 > c2.x && c1.z < c2.z + w2 && c1.z + w1 > c2.z);
     }
 
     /**
