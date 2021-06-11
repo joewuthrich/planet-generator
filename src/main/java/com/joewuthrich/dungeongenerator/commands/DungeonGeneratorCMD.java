@@ -64,12 +64,7 @@ public class DungeonGeneratorCMD implements CommandExecutor {
 
         } while (numCollisions != 0);
 
-        //chooseRooms(roomList);
-
-        List<Edge> edges = new ArrayList<>();
-        edges = getConnections(roomList);
-
-        //addEdges(edges, MSTEdges);
+        List<Edge> edges = getConnections(roomList);
 
         placeBlocks(roomList, seCorner, nwCorner);
         placeLines(edges);

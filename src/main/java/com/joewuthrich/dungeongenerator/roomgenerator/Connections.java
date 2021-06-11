@@ -67,9 +67,11 @@ public class Connections {
 
         int cycles = (int) Math.round((points / 6.667) + (Math.random() * 2 - 1));
 
+        int startIndex = (int) Math.round((double) edges.size() / 7);
+
         CYCLES:
         while (cycles > 0) {
-            Edge edge = edges.get(5);
+            Edge edge = edges.get(startIndex);
 
             List<Coordinate> aList = new ArrayList<>();
             List<Coordinate> bList = new ArrayList<>();
