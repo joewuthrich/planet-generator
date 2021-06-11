@@ -15,8 +15,8 @@ public class MST {
         List<Coordinate> coords = new ArrayList<>();
         List<Edge> MSTEdges = new ArrayList<>();
 
-        coords.add(roomList[0].getCoordinates());
-        Coordinate coordinate = roomList[0].getCoordinates();
+        coords.add(roomList[0].getCenterCoordinate());
+        Coordinate coordinate = roomList[0].getCenterCoordinate();
         Edge removeEdge = null;
 
         for (int i = 0; i < roomList.length - 1; i++) {
@@ -62,7 +62,7 @@ public class MST {
             if (addList.contains(edge))
                 continue;
 
-            if (0.05 > Math.random())
+            if (0.1 > Math.random())
                 addList.add(edge);
         }
         return addList;

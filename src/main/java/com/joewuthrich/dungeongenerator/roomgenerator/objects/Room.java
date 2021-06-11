@@ -15,6 +15,7 @@ public class Room {
     public int lengthZ;
     int size;
     boolean currentlyUsed = false;
+    Coordinate center;
 
     public Room(int _roomID, int _nwX, int _nwZ, int minRoomSize, int maxRoomSize) {
         roomID = _roomID;
@@ -25,15 +26,23 @@ public class Room {
         lengthZ = ThreadLocalRandom.current().nextInt(maxRoomSize - minRoomSize) + minRoomSize;
 
         size = lengthX * lengthZ;
+
+        center = new Coordinate((int) Math.round(_nwX + ((double) lengthX / 2d)), (int) Math.round(_nwZ + ((double) lengthZ / 2d)));
     }
 
-    public void setCoordinates(int newNorthWestX, int newNorthWestZ) {
-        nwCorner.x = newNorthWestX;
-        nwCorner.z = newNorthWestZ;
+    public void setCoordinates(int _nwX, int _nwZ) {
+        nwCorner.x = _nwX;
+        nwCorner.z = _nwZ;
+
+        center = new Coordinate((int) Math.round(_nwX + ((double) lengthX / 2d)), (int) Math.round(_nwZ + ((double) lengthZ / 2d)));
     }
 
     public Coordinate getCoordinates() {
         return nwCorner;
+    }
+
+    public Coordinate getCenterCoordinate() {
+        return center;
     }
 
     public void setUsed(boolean value) { currentlyUsed = value; }

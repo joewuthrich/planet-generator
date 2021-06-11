@@ -18,6 +18,7 @@ import static com.joewuthrich.dungeongenerator.placeblocks.PlaceBlocks.placeBloc
 import static com.joewuthrich.dungeongenerator.placeblocks.PlaceLine.placeLines;
 import static com.joewuthrich.dungeongenerator.roomgenerator.CollisionDetection.*;
 import static com.joewuthrich.dungeongenerator.roomgenerator.GenerateRooms.generateRooms;
+import static com.joewuthrich.dungeongenerator.roomgenerator.MST.addEdges;
 import static com.joewuthrich.dungeongenerator.roomgenerator.MST.generateMST;
 import static com.joewuthrich.dungeongenerator.roomgenerator.RoomPicker.chooseRooms;
 import static com.joewuthrich.dungeongenerator.roomgenerator.Triangulation.triangulateEdges;
@@ -75,7 +76,7 @@ public class DungeonGeneratorCMD implements CommandExecutor {
 
                 } while (numCollisions != 0);
 
-                chooseRooms(roomList);
+                //chooseRooms(roomList);
 
                 try {
                     edges = triangulateEdges(roomList);
@@ -95,7 +96,7 @@ public class DungeonGeneratorCMD implements CommandExecutor {
             return false;
         }
 
-        //addEdges(edges, MSTEdges);
+        addEdges(edges, MSTEdges);
 
         placeBlocks(roomList, seCorner, nwCorner);
         placeLines(MSTEdges);

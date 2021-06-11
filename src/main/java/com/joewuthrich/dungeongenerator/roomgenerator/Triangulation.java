@@ -25,7 +25,7 @@ public class Triangulation {
 
         Coordinate c;
         for (Room room : roomList) {
-            c = room.getCoordinates();
+            c = room.getCenterCoordinate();
             pointSet.add(new Vector2D(c.x, c.z));
         }
 

@@ -17,7 +17,6 @@ public class PlaceLine {
 
         Material material = Material.YELLOW_CONCRETE;
 
-        edges:
         for (Edge edge : edges) {
             sx = edge.smallestX();
             sz = edge.smallestZ();
@@ -26,10 +25,12 @@ public class PlaceLine {
             dz = edge.a.z - edge.b.z;
 
             if (dx == 0) {
-                for (int z = sz; z < sz + dz; z++)
+                for (int z = sz; z < sz + Math.abs(dz); z++) {
                     w.getBlockAt(edge.a.x, 100, z).setType(material);
-
-                continue edges;
+                    System.out.println(edge.a.x + "," + z + " X");
+                }
+                System.out.println("X: " + sz + " " + dz);
+                continue;
             }
 
             m = dz/dx;
@@ -42,9 +43,8 @@ public class PlaceLine {
             for (int x = sx; x < sx + dx; x++)
                 w.getBlockAt(x, 100, (int) Math.round(m * x + c)).setType(material);
 
-            for (int z = sz; z < sz + dz; z++) {
+            for (int z = sz; z < sz + dz; z++)
                 w.getBlockAt((int) Math.round((z - c) / m), 100, z).setType(material);
-            }
         }
     }
 }
