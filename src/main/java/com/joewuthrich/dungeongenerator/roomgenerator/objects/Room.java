@@ -14,7 +14,6 @@ public class Room {
     public int lengthX;
     public int lengthZ;
     int size;
-    boolean currentlyUsed = false;
     Coordinate center;
 
     public Room(int _roomID, int _nwX, int _nwZ, int minRoomSize, int maxRoomSize) {
@@ -44,11 +43,5 @@ public class Room {
     public Coordinate getCenterCoordinate() {
         return center;
     }
-
-    public void setUsed(boolean value) { currentlyUsed = value; }
-
-    public boolean isUsed() { return currentlyUsed; }
-
-    public int getSize() { return size; }
 }
 

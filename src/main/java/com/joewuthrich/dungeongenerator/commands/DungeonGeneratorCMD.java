@@ -4,7 +4,6 @@ import com.joewuthrich.dungeongenerator.roomgenerator.objects.Coordinate;
 import com.joewuthrich.dungeongenerator.roomgenerator.objects.Edge;
 import com.joewuthrich.dungeongenerator.roomgenerator.objects.Room;
 import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.command.Command;

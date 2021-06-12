@@ -18,22 +18,15 @@ public class PlaceBlocks {
 
         fillBlocks(w, seCorner, nwCorner);
 
-        Material m;
-
         for (Room room : roomList) {
             coordinates = room.getCoordinates();
             length = room.lengthX;
             width = room.lengthZ;
 
-            if (room.isUsed())
-                m = Material.GREEN_CONCRETE;
-            else
-                m = Material.WHITE_CONCRETE;
-
             for (int x = coordinates.x; x < coordinates.x + length; x++) {
                 for (int y = coordinates.z; y < coordinates.z + width; y++) {
                     if (w.getBlockAt(x, 100, y).getType() == Material.BLACK_CONCRETE)
-                        w.getBlockAt(x, 100, y).setType(m);
+                        w.getBlockAt(x, 100, y).setType(Material.WHITE_CONCRETE);
                     else
                         w.getBlockAt(x, 100, y).setType(Material.RED_CONCRETE);
                 }

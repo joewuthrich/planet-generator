@@ -13,12 +13,6 @@ public class Coordinate {
         this.z = _z;
     }
 
-    public Coordinate(int _x, int _y, int _z) {
-        this.x = _x;
-        this.y = _y;
-        this.z = _z;
-    }
-
     public String toString() {
         return x + "," + z;
     }

@@ -6,7 +6,7 @@ import com.joewuthrich.dungeongenerator.roomgenerator.objects.Room;
 import java.util.AbstractMap;
 
 public class CollisionDetection {
-    public static Room[] resolveCollisions(Room[] roomList, int[][] collisions, int circleX, int circleZ) {
+    public static void resolveCollisions(Room[] roomList, int[][] collisions, int circleX, int circleZ) {
         Room room1;
         Room room2;
 
@@ -39,7 +39,6 @@ public class CollisionDetection {
                 roomList[collision[0]] = separateRooms(room1, circleX, circleZ, distance1);
             }
         }
-        return roomList;
     }
 
     /**

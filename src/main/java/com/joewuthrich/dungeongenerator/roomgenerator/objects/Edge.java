@@ -1,7 +1,5 @@
 package com.joewuthrich.dungeongenerator.roomgenerator.objects;
 
-import java.util.List;
-
 public class Edge {
     public Coordinate a;
     public Coordinate b;
@@ -27,23 +25,6 @@ public class Edge {
      */
     public boolean containsCoordinate(Coordinate c) {
         return (c.equals(a) || c.equals(b));
-    }
-
-    /**
-     * Check if the edge contains more than one coordinate from a list
-     */
-    public boolean containsMultipleCoordinates(List<Coordinate> coordinates) {
-        int i = 0;
-        for (Coordinate c : coordinates) {
-            if (c == null)
-                return (i > 1);
-
-            if (containsCoordinate(c))
-                i++;
-        }
-
-
-        return (i > 1);
     }
 
     /**
