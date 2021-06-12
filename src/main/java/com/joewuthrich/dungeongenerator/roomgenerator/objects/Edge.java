@@ -26,7 +26,7 @@ public class Edge {
      * Check if the edge contains a coordinate.
      */
     public boolean containsCoordinate(Coordinate c) {
-        return (c.x == a.x && c.y == a.y && c.z == a.z || c.x == b.x && c.y == b.y && c.z == b.z);
+        return (c.equals(a) || c.equals(b));
     }
 
     /**
@@ -52,7 +52,7 @@ public class Edge {
      * @return the other coordinate
      */
     public Coordinate opposite(Coordinate c) {
-        if (c.x == a.x && c.y == a.y && c.z == a.z)
+        if (c.equals(a))
             return b;
         else
             return a;
