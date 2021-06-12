@@ -6,7 +6,7 @@ A way to generate random rooms and passageways similar to a roguelike game, and 
 The rooms and passageways are generated in the following way:
 - Get parameters: [number of rooms], [x coordinate center], [z coordinate center], [minimum room edge length], [maximum room edge length]
 - Generate [number of rooms] rooms in side a circle
-- Space the rooms out until they no longer touch
+- Space the rooms out until they no longer collide
 - Connect each room with a complete graph
 - Use a version of Kruskal’s MST Algorithm to generate the optimum connections for the rooms
 - Reintroduce a few edges from the complete graph to create cycles
