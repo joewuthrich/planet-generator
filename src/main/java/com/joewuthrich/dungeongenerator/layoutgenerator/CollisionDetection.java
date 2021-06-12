@@ -1,7 +1,7 @@
-package com.joewuthrich.dungeongenerator.roomgenerator;
+package com.joewuthrich.dungeongenerator.layoutgenerator;
 
-import com.joewuthrich.dungeongenerator.roomgenerator.objects.Coordinate;
-import com.joewuthrich.dungeongenerator.roomgenerator.objects.Room;
+import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Coordinate;
+import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Room;
 
 import java.util.AbstractMap;
 

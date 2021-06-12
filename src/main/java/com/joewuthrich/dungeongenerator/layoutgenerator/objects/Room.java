@@ -1,4 +1,4 @@
-package com.joewuthrich.dungeongenerator.roomgenerator.objects;
+package com.joewuthrich.dungeongenerator.layoutgenerator.objects;
 
 import java.util.concurrent.ThreadLocalRandom;
 

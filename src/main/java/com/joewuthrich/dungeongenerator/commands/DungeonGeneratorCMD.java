@@ -1,11 +1,13 @@
 package com.joewuthrich.dungeongenerator.commands;
 
-import com.joewuthrich.dungeongenerator.roomgenerator.objects.Coordinate;
-import com.joewuthrich.dungeongenerator.roomgenerator.objects.Edge;
-import com.joewuthrich.dungeongenerator.roomgenerator.objects.Room;
+import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Coordinate;
+import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Edge;
+import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Room;
 import java.util.AbstractMap;
 import java.util.List;
 
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,9 +16,10 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.joewuthrich.dungeongenerator.placeblocks.PlaceBlocks.placeBlocks;
 import static com.joewuthrich.dungeongenerator.placeblocks.PlaceLine.placeLines;
-import static com.joewuthrich.dungeongenerator.roomgenerator.CollisionDetection.*;
-import static com.joewuthrich.dungeongenerator.roomgenerator.Connections.getConnections;
-import static com.joewuthrich.dungeongenerator.roomgenerator.GenerateRooms.generateRooms;
+import static com.joewuthrich.dungeongenerator.layoutgenerator.CollisionDetection.*;
+import static com.joewuthrich.dungeongenerator.layoutgenerator.Connections.getConnections;
+import static com.joewuthrich.dungeongenerator.layoutgenerator.GenerateRooms.generateRooms;
+import static com.joewuthrich.dungeongenerator.roomgenerator.PlaceOval.generateOval;
 
 public class DungeonGeneratorCMD implements CommandExecutor {
 
@@ -37,16 +40,12 @@ public class DungeonGeneratorCMD implements CommandExecutor {
         int centerY = Integer.parseInt(args[2]);
         int minRoomLength = Integer.parseInt(args[3]);
         int maxRoomLength = Integer.parseInt(args[4]);
+        int height = Integer.parseInt(args[5]);
 
         Room[] roomList;
 
-        Coordinate seCorner, nwCorner;
-
         roomList = generateRooms(numRooms, radius, centerX,
                 centerY, minRoomLength, maxRoomLength);
-
-        seCorner = new Coordinate(centerX + (radius * 2), centerY + (radius * 2));
-        nwCorner = new Coordinate(centerX - (radius * 2), centerY - (radius * 2));
 
         AbstractMap.SimpleEntry<int[][], Integer> c;
         int[][] collisions;
@@ -65,7 +64,12 @@ public class DungeonGeneratorCMD implements CommandExecutor {
 
         List<Edge> edges = getConnections(roomList);
 
-        placeBlocks(roomList, seCorner, nwCorner);
+        //placeBlocks(roomList, seCorner, nwCorner);
+
+        for (Room room : roomList) {
+            generateOval(room, height);
+        }
+
         placeLines(edges);
 
         return true;

@@ -1,6 +1,6 @@
 package com.joewuthrich.dungeongenerator.placeblocks;
 
-import com.joewuthrich.dungeongenerator.roomgenerator.objects.Edge;
+import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Edge;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
