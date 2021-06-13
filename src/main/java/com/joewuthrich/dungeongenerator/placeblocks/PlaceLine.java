@@ -46,7 +46,7 @@ public class PlaceLine {
 
             for (int z = sz; z < sz + dz; z += 3)
                 generateBlob(new Coordinate((int) Math.round((z - c) / m), z), 5);
-            //w.getBlockAt((int) Math.round((z - c) / m), 100, z).setType(material);
+                //w.getBlockAt((int) Math.round((z - c) / m), 100, z).setType(material);
         }
     }
 }

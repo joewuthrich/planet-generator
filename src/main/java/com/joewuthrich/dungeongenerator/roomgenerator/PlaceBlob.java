@@ -17,8 +17,6 @@ public class PlaceBlob {
     public static void generateBlob(Coordinate coordinate, int height) {
         Room[] room = {new Room(0, coordinate.x, coordinate.y - (int) Math.round((double) height / 2), coordinate.z, 10, 12)};
 
-
-
         generateBlobs(room, height- (int) Math.round((double) height / 3));
     }
 

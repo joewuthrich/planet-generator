@@ -10,3 +10,6 @@ commands:
     description: The basic DungeonGenerator comand
     usage: /dg [roomCount] [circleX] [circleY] [minRoomLength] [maxRoomLength] [height]
     aliases: dg
+  planetgenerator:
+    usage: /pg [x] [y] [z] [radius]
+    aliases: pg
