@@ -1,5 +1,8 @@
 package com.joewuthrich.dungeongenerator.layoutgenerator.objects;
 
+import org.bukkit.Bukkit;
+import org.bukkit.block.Block;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -42,6 +45,10 @@ public class Room {
 
     public Coordinate getCenterCoordinate() {
         return center;
+    }
+
+    public Block getCenterBlock() {
+        return Bukkit.getServer().getWorld("world").getBlockAt(center.x, center.y, center.z);
     }
 }
 

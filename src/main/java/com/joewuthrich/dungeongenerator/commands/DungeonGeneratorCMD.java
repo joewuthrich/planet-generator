@@ -1,24 +1,21 @@
 package com.joewuthrich.dungeongenerator.commands;
 
-import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Coordinate;
 import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Edge;
 import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Room;
 import java.util.AbstractMap;
 import java.util.List;
 
-import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static com.joewuthrich.dungeongenerator.placeblocks.PlaceBlocks.placeBlocks;
 import static com.joewuthrich.dungeongenerator.placeblocks.PlaceLine.placeLines;
 import static com.joewuthrich.dungeongenerator.layoutgenerator.CollisionDetection.*;
 import static com.joewuthrich.dungeongenerator.layoutgenerator.Connections.getConnections;
 import static com.joewuthrich.dungeongenerator.layoutgenerator.GenerateRooms.generateRooms;
+import static com.joewuthrich.dungeongenerator.roomgenerator.PlaceBlob.generateBlobs;
 import static com.joewuthrich.dungeongenerator.roomgenerator.PlaceOval.generateOval;
 
 public class DungeonGeneratorCMD implements CommandExecutor {
@@ -64,12 +61,7 @@ public class DungeonGeneratorCMD implements CommandExecutor {
 
         List<Edge> edges = getConnections(roomList);
 
-        //placeBlocks(roomList, seCorner, nwCorner);
-
-        for (Room room : roomList) {
-            generateOval(room, height);
-        }
-
+        generateBlobs(roomList, height);
         placeLines(edges);
 
         return true;

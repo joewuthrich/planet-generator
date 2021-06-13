@@ -6,13 +6,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.util.noise.NoiseGenerator;
+import org.bukkit.util.noise.PerlinNoiseGenerator;
+import org.bukkit.util.noise.PerlinOctaveGenerator;
+import org.bukkit.util.noise.SimplexNoiseGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlaceOval {
 
-    private static List<Block> getOvalBlocks(Coordinate coordinate, int lengthX, int lengthZ, int height) {
+    private static void setOvalBlocks(Coordinate coordinate, Material material, int lengthX, int lengthZ, int height) {
         World world = Bukkit.getServer().getWorld("world");
         assert world != null;
 
@@ -26,21 +30,22 @@ public class PlaceOval {
             for (int y = -halfY; y <= halfY; y++) {
                 for (int z = -halfZ; z <= halfZ; z++) {
                     double distance = ((double) (x * x)/(double) (halfX * halfX))+((double) (y * y)/(double) (halfY * halfY))+((double) (z * z)/(double) (halfZ * halfZ));
-                    if (distance <= 1 && distance >= 0.65) {
+                    double noise = SimplexNoiseGenerator.getNoise(x, y, z);
+
+                    if (distance <= 4 * noise) {
                         blocks.add(world.getBlockAt(x + coordinate.x, y + coordinate.y, z + coordinate.z));
                     }
                 }
             }
         }
 
-        return blocks;
-    }
-
-    public static void generateOval(Room room, int height) {
-        List<Block> blocks = getOvalBlocks(room.getCenterCoordinate(),room.lengthX, room.lengthZ, height);
-
         for (Block b : blocks) {
             b.setType(Material.STONE);
         }
+    }
+
+    public static void generateOval(Room[] roomList, int height) {
+        for (Room room : roomList)
+            setOvalBlocks(room.getCenterCoordinate(), Material.STONE, room.lengthX, height, room.lengthZ);
     }
 }
