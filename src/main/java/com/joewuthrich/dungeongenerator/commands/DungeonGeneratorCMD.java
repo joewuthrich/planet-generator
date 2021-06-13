@@ -24,6 +24,8 @@ public class DungeonGeneratorCMD implements CommandExecutor {
         if (!(sender instanceof Player))
             return false;
 
+        long start = System.currentTimeMillis();
+
         int numRooms = Integer.parseInt(args[0]);
 
         if (numRooms < 4) {
@@ -47,6 +49,9 @@ public class DungeonGeneratorCMD implements CommandExecutor {
         int[][] collisions;
         int numCollisions;
 
+        long finish = System.currentTimeMillis();
+        sender.sendMessage("Time elapsed before collisions: " + (finish - start));
+
         do {
             c = checkCollisions(roomList);
             collisions = c.getKey();
@@ -58,10 +63,20 @@ public class DungeonGeneratorCMD implements CommandExecutor {
 
         } while (numCollisions != 0);
 
+        finish = System.currentTimeMillis();
+        sender.sendMessage("Time elapsed before connections: " + (finish - start));
+
         List<Edge> edges = getConnections(roomList);
 
+        finish = System.currentTimeMillis();
+        sender.sendMessage("Time elapsed before placement: " + (finish - start));
+
+        //placeBlocks(roomList);
         generateBlobs(roomList, height);
         placeLines(edges);
+
+        finish = System.currentTimeMillis();
+        sender.sendMessage("Time elapsed after: " + (finish - start));
 
         return true;
     }

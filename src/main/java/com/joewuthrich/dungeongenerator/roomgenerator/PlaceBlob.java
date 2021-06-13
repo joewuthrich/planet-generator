@@ -61,7 +61,7 @@ public class PlaceBlob {
                     double dist = z * z * zDiff + yDist;
 
                     double noise = AMPLITUDE * SimplexNoiseGenerator.getNoise(dx, dy, dz);
-                    if (dist + dist * noise < radSqr)
+                    if (dist + dist * noise <= radSqr)
                         blocks.add(WORLD.getBlockAt(x + bx, y + by, z + bz));
                 }
             }

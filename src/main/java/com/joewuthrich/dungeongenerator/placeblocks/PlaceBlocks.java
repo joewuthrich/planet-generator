@@ -7,7 +7,11 @@ import org.bukkit.Material;
 import org.bukkit.World;
 
 public class PlaceBlocks {
-    public static boolean placeBlocks(Room[] roomList, Coordinate seCorner, Coordinate nwCorner) {
+    public static void placeBlocks(Room[] roomList) {
+        placeBlocks(roomList, new Coordinate(0, 0), new Coordinate(0, 0));
+    }
+
+    public static void placeBlocks(Room[] roomList, Coordinate seCorner, Coordinate nwCorner) {
 
         World w = Bukkit.getServer().getWorld("world");
         assert w != null;
@@ -16,7 +20,7 @@ public class PlaceBlocks {
         int length;
         int width;
 
-        fillBlocks(w, seCorner, nwCorner);
+        //fillBlocks(w, seCorner, nwCorner);
 
         for (Room room : roomList) {
             coordinates = room.getCoordinates();
@@ -29,8 +33,6 @@ public class PlaceBlocks {
                 }
             }
         }
-
-        return true;
     }
 
     public static void fillBlocks(World w, Coordinate seCorner, Coordinate nwCorner) {
