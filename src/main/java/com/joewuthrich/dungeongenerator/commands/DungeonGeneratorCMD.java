@@ -1,10 +1,8 @@
 package com.joewuthrich.dungeongenerator.commands;
 
-import com.joewuthrich.dungeongenerator.roomgenerator.objects.Coordinate;
-import com.joewuthrich.dungeongenerator.roomgenerator.objects.Edge;
-import com.joewuthrich.dungeongenerator.roomgenerator.objects.Room;
+import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Edge;
+import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Room;
 import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.command.Command;
@@ -13,11 +11,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static com.joewuthrich.dungeongenerator.placeblocks.PlaceBlocks.placeBlocks;
 import static com.joewuthrich.dungeongenerator.placeblocks.PlaceLine.placeLines;
-import static com.joewuthrich.dungeongenerator.roomgenerator.CollisionDetection.*;
-import static com.joewuthrich.dungeongenerator.roomgenerator.Connections.getConnections;
-import static com.joewuthrich.dungeongenerator.roomgenerator.GenerateRooms.generateRooms;
+import static com.joewuthrich.dungeongenerator.layoutgenerator.CollisionDetection.*;
+import static com.joewuthrich.dungeongenerator.layoutgenerator.Connections.getConnections;
+import static com.joewuthrich.dungeongenerator.layoutgenerator.GenerateRooms.generateRooms;
+import static com.joewuthrich.dungeongenerator.roomgenerator.PlaceBlob.generateBlobs;
 
 public class DungeonGeneratorCMD implements CommandExecutor {
 
@@ -25,6 +23,8 @@ public class DungeonGeneratorCMD implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (!(sender instanceof Player))
             return false;
+
+        long start = System.currentTimeMillis();
 
         int numRooms = Integer.parseInt(args[0]);
 
@@ -38,20 +38,19 @@ public class DungeonGeneratorCMD implements CommandExecutor {
         int centerY = Integer.parseInt(args[2]);
         int minRoomLength = Integer.parseInt(args[3]);
         int maxRoomLength = Integer.parseInt(args[4]);
+        int height = Integer.parseInt(args[5]);
 
         Room[] roomList;
-
-        Coordinate seCorner, nwCorner;
 
         roomList = generateRooms(numRooms, radius, centerX,
                 centerY, minRoomLength, maxRoomLength);
 
-        seCorner = new Coordinate(centerX + (radius * 2), centerY + (radius * 2));
-        nwCorner = new Coordinate(centerX - (radius * 2), centerY - (radius * 2));
-
         AbstractMap.SimpleEntry<int[][], Integer> c;
         int[][] collisions;
         int numCollisions;
+
+        long finish = System.currentTimeMillis();
+        sender.sendMessage("Time elapsed before collisions: " + (finish - start));
 
         do {
             c = checkCollisions(roomList);
@@ -64,10 +63,20 @@ public class DungeonGeneratorCMD implements CommandExecutor {
 
         } while (numCollisions != 0);
 
+        finish = System.currentTimeMillis();
+        sender.sendMessage("Time elapsed before connections: " + (finish - start));
+
         List<Edge> edges = getConnections(roomList);
 
-        placeBlocks(roomList, seCorner, nwCorner);
+        finish = System.currentTimeMillis();
+        sender.sendMessage("Time elapsed before placement: " + (finish - start));
+
+        //placeBlocks(roomList);
+        generateBlobs(roomList, height);
         placeLines(edges);
+
+        finish = System.currentTimeMillis();
+        sender.sendMessage("Time elapsed after: " + (finish - start));
 
         return true;
     }

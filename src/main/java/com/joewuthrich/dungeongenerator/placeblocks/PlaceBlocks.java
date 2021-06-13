@@ -1,13 +1,17 @@
 package com.joewuthrich.dungeongenerator.placeblocks;
 
-import com.joewuthrich.dungeongenerator.roomgenerator.objects.Coordinate;
-import com.joewuthrich.dungeongenerator.roomgenerator.objects.Room;
+import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Coordinate;
+import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Room;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 
 public class PlaceBlocks {
-    public static boolean placeBlocks(Room[] roomList, Coordinate seCorner, Coordinate nwCorner) {
+    public static void placeBlocks(Room[] roomList) {
+        placeBlocks(roomList, new Coordinate(0, 0), new Coordinate(0, 0));
+    }
+
+    public static void placeBlocks(Room[] roomList, Coordinate seCorner, Coordinate nwCorner) {
 
         World w = Bukkit.getServer().getWorld("world");
         assert w != null;
@@ -16,31 +20,19 @@ public class PlaceBlocks {
         int length;
         int width;
 
-        fillBlocks(w, seCorner, nwCorner);
-
-        Material m;
+        //fillBlocks(w, seCorner, nwCorner);
 
         for (Room room : roomList) {
             coordinates = room.getCoordinates();
             length = room.lengthX;
             width = room.lengthZ;
 
-            if (room.isUsed())
-                m = Material.GREEN_CONCRETE;
-            else
-                m = Material.WHITE_CONCRETE;
-
             for (int x = coordinates.x; x < coordinates.x + length; x++) {
                 for (int y = coordinates.z; y < coordinates.z + width; y++) {
-                    if (w.getBlockAt(x, 100, y).getType() == Material.BLACK_CONCRETE)
-                        w.getBlockAt(x, 100, y).setType(m);
-                    else
-                        w.getBlockAt(x, 100, y).setType(Material.RED_CONCRETE);
+                    w.getBlockAt(x, 100, y).setType(Material.WHITE_CONCRETE);
                 }
             }
         }
-
-        return true;
     }
 
     public static void fillBlocks(World w, Coordinate seCorner, Coordinate nwCorner) {

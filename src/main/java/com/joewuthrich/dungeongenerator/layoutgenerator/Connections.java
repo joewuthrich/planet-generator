@@ -1,6 +1,6 @@
-package com.joewuthrich.dungeongenerator.roomgenerator;
+package com.joewuthrich.dungeongenerator.layoutgenerator;
 
-import com.joewuthrich.dungeongenerator.roomgenerator.objects.*;
+import com.joewuthrich.dungeongenerator.layoutgenerator.objects.*;
 
 import java.util.*;
 
@@ -63,6 +63,7 @@ public class Connections {
      * @return a list of edges to add
      */
     private static List<Edge> addCycles(List<Edge> edges, List<Edge> newEdges) {
+
         double points = newEdges.size() + 1;
 
         int cycles = (int) Math.round((points / 6.667) + (Math.random() * 2 - 1));
@@ -71,6 +72,9 @@ public class Connections {
 
         CYCLES:
         while (cycles > 0) {
+            if (edges.size() == 0)
+                return newEdges;
+
             Edge edge = edges.get(startIndex);
 
             List<Coordinate> aList = new ArrayList<>();

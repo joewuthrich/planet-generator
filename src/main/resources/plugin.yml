@@ -8,5 +8,5 @@ description: Generate a random dungeon in Minecraft with rooms and passageways.
 commands:
   dungeongenerator:
     description: The basic DungeonGenerator comand
-    usage: /dg [roomCount] [circleX] [circleY] [minRoomLength] [maxRoomLength]
+    usage: /dg [roomCount] [circleX] [circleY] [minRoomLength] [maxRoomLength] [height]
     aliases: dg

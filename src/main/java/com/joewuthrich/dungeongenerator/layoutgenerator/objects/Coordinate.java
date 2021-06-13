@@ -1,4 +1,4 @@
-package com.joewuthrich.dungeongenerator.roomgenerator.objects;
+package com.joewuthrich.dungeongenerator.layoutgenerator.objects;
 
 public class Coordinate {
     public int x;
@@ -10,12 +10,6 @@ public class Coordinate {
     public Coordinate(int _x, int _z) {
         this.x = _x;
         this.y = 100;
-        this.z = _z;
-    }
-
-    public Coordinate(int _x, int _y, int _z) {
-        this.x = _x;
-        this.y = _y;
         this.z = _z;
     }
 

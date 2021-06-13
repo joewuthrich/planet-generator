@@ -1,4 +1,7 @@
-package com.joewuthrich.dungeongenerator.roomgenerator.objects;
+package com.joewuthrich.dungeongenerator.layoutgenerator.objects;
+
+import org.bukkit.Bukkit;
+import org.bukkit.block.Block;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -14,7 +17,6 @@ public class Room {
     public int lengthX;
     public int lengthZ;
     int size;
-    boolean currentlyUsed = false;
     Coordinate center;
 
     public Room(int _roomID, int _nwX, int _nwZ, int minRoomSize, int maxRoomSize) {
@@ -45,10 +47,8 @@ public class Room {
         return center;
     }
 
-    public void setUsed(boolean value) { currentlyUsed = value; }
-
-    public boolean isUsed() { return currentlyUsed; }
-
-    public int getSize() { return size; }
+    public Block getCenterBlock() {
+        return Bukkit.getServer().getWorld("world").getBlockAt(center.x, center.y, center.z);
+    }
 }
 
