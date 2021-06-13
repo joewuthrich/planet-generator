@@ -14,8 +14,12 @@ import java.util.concurrent.ThreadLocalRandom;
 public class PlaceBlob {
 
     public static void generateBlobs(Room[] roomList, int height) {
+
+        double f = 1.0 - Math.random()/Math.nextDown(1.0);
         for (Room room : roomList) {
-            List<Block> blocks = getBlob(room.getCenterBlock(), room.lengthX, height, room.lengthZ);
+            List<Block> blocks = getBlob(room.getCenterBlock(), room.lengthX,
+                    (int) Math.round((height - (double) height / 3) * (1.0 - f) +
+                            (height + (double) height / 3) * f), room.lengthZ);
 
             for (Block b : blocks)
                 b.setType(Material.STONE);
