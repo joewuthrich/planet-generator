@@ -16,7 +16,6 @@ import static com.joewuthrich.dungeongenerator.layoutgenerator.CollisionDetectio
 import static com.joewuthrich.dungeongenerator.layoutgenerator.Connections.getConnections;
 import static com.joewuthrich.dungeongenerator.layoutgenerator.GenerateRooms.generateRooms;
 import static com.joewuthrich.dungeongenerator.roomgenerator.PlaceBlob.generateBlobs;
-import static com.joewuthrich.dungeongenerator.roomgenerator.PlaceOval.generateOval;
 
 public class DungeonGeneratorCMD implements CommandExecutor {
 
