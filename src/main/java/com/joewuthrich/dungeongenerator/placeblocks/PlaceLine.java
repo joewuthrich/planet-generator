@@ -1,11 +1,14 @@
 package com.joewuthrich.dungeongenerator.placeblocks;
 
+import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Coordinate;
 import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Edge;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 
 import java.util.List;
+
+import static com.joewuthrich.dungeongenerator.roomgenerator.PlaceBlob.generateBlob;
 
 public class PlaceLine {
     public static void placeLines(List<Edge> edges) {
@@ -37,11 +40,13 @@ public class PlaceLine {
             dx = Math.abs(dx);
             dz = Math.abs(dz);
 
-            for (int x = sx; x < sx + dx; x++)
-                w.getBlockAt(x, 100, (int) Math.round(m * x + c)).setType(material);
+            for (int x = sx; x < sx + dx; x += 3)
+                generateBlob(new Coordinate(x, (int) Math.round(m * x + c)), 5);
+                //w.getBlockAt(x, 100, (int) Math.round(m * x + c)).setType(material);
 
-            for (int z = sz; z < sz + dz; z++)
-                w.getBlockAt((int) Math.round((z - c) / m), 100, z).setType(material);
+            for (int z = sz; z < sz + dz; z += 3)
+                generateBlob(new Coordinate((int) Math.round((z - c) / m), z), 5);
+            //w.getBlockAt((int) Math.round((z - c) / m), 100, z).setType(material);
         }
     }
 }

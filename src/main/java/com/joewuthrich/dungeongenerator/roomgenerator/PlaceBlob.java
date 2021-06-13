@@ -1,5 +1,6 @@
 package com.joewuthrich.dungeongenerator.roomgenerator;
 
+import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Coordinate;
 import com.joewuthrich.dungeongenerator.layoutgenerator.objects.Room;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -13,13 +14,17 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class PlaceBlob {
 
-    public static void generateBlobs(Room[] roomList, int height) {
+    public static void generateBlob(Coordinate coordinate, int height) {
+        Room[] room = {new Room(0, coordinate.x, coordinate.y - (int) Math.round((double) height / 2), coordinate.z, 10, 12)};
 
-        double f = 1.0 - Math.random()/Math.nextDown(1.0);
+
+
+        generateBlobs(room, height- (int) Math.round((double) height / 3));
+    }
+
+    public static void generateBlobs(Room[] roomList, int height) {
         for (Room room : roomList) {
-            List<Block> blocks = getBlob(room.getCenterBlock(), room.lengthX,
-                    (int) Math.round((height - (double) height / 3) * (1.0 - f) +
-                            (height + (double) height / 3) * f), room.lengthZ);
+            List<Block> blocks = getBlob(room.getCenterBlock(), room.lengthX, height, room.lengthZ);
 
             for (Block b : blocks)
                 b.setType(Material.STONE);

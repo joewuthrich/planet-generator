@@ -32,6 +32,19 @@ public class Room {
         center = new Coordinate((int) Math.round(_nwX + ((double) lengthX / 2d)), (int) Math.round(_nwZ + ((double) lengthZ / 2d)));
     }
 
+    public Room(int _roomID, int _nwX, int _nwY, int _nwZ, int minRoomSize, int maxRoomSize) {
+        roomID = _roomID;
+
+        nwCorner = new Coordinate(_nwX, _nwZ);
+
+        lengthX = ThreadLocalRandom.current().nextInt(maxRoomSize - minRoomSize) + minRoomSize;
+        lengthZ = ThreadLocalRandom.current().nextInt(maxRoomSize - minRoomSize) + minRoomSize;
+
+        size = lengthX * lengthZ;
+
+        center = new Coordinate((int) Math.round(_nwX + ((double) lengthX / 2d)), _nwY, (int) Math.round(_nwZ + ((double) lengthZ / 2d)));
+    }
+
     public void setCoordinates(int _nwX, int _nwZ) {
         nwCorner.x = _nwX;
         nwCorner.z = _nwZ;
