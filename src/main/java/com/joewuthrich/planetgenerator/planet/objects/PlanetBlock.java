@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 public class PlanetBlock {
-    private final int OVERLAY = 0, UNDERLAY = 1, SOLID = 2, AIR = 3;
+    private final int OVERLAY = 0, UNDERLAY = 1, SOLID = 2, AIR = 3, INSIDE_AIR = 4;
 
     Block b;
     Material prev;
@@ -17,16 +17,19 @@ public class PlanetBlock {
     }
 
     /**
-     * Get the type of the block: OVERLAY = 0, UNDERLAY = 1, SOLID = 2, AIR = 3
+     * Get the type of the block: OVERLAY = 0, UNDERLAY = 1, SOLID = 2, AIR = 3, INSIDE_AIR = 4
      */
     public int getType() { return t; }
 
     /**
-     * Set the type of the block: OVERLAY = 0, UNDERLAY = 1, SOLID = 2, AIR = 3
+     * Set the type of the block: OVERLAY = 0, UNDERLAY = 1, SOLID = 2, AIR = 3, INSIDE_AIR = 4
      */
     public void setType(int type) { t = type; }
 
     public Block getBlock() { return b; };
 
-    public void setBlockType(Material m) { b.setType(m); }
+    public void setBlockType(Material m) {
+        prev = getBlock().getType();
+        b.setType(m);
+    }
 }
