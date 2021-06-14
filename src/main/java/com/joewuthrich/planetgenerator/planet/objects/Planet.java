@@ -1,6 +1,6 @@
 package com.joewuthrich.planetgenerator.planet.objects;
 
-import org.bukkit.Bukkit;
+import org.apache.commons.lang.RandomStringUtils;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -12,13 +12,14 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Planet {
-    private final int OVERLAY = 0, UNDERLAY = 1, SOLID = 2, AIR = 3;
+    private final int OVERLAY = 0, UNDERLAY = 1, SOLID = 2, AIR = 3, INSIDE_AIR = 4;
 
     Block centerBlock;
 
     Material o;
     Material u;
     Material[] c;
+    Material cave;
 
     Biome biome;
 
@@ -32,6 +33,8 @@ public class Planet {
      * @param radius the radius of the planet
      */
     public Planet(Block block, int radius) {
+        System.out.println(RandomStringUtils.randomAlphabetic(5).toUpperCase() + RandomStringUtils.randomNumeric(8));
+
         final double FREQUENCY = 0.5, AMPLITUDE = 20d;
         final World WORLD = block.getWorld();
 
@@ -61,12 +64,16 @@ public class Planet {
                     double dz = zSeed + z * distortion;
                     double dist = z * z + yDist;
 
-                    double noise = AMPLITUDE * SimplexNoiseGenerator.getNoise(dx, dy, dz);
-
                     Block b = WORLD.getBlockAt(x + bx, y + by, z + bz);
 
-                    if (!(dist + dist * noise <= radSqr) && (Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2) < radSqr))
-                        blocksList.add(new PlanetBlock(b, Material.AIR, SOLID));
+                    if ((Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2) < radSqr)) {
+                        double noise = AMPLITUDE * SimplexNoiseGenerator.getNoise(dx, dy, dz);
+
+                        if (!(dist + dist * noise <= radSqr))
+                            blocksList.add(new PlanetBlock(b, Material.AIR, SOLID));
+                        else
+                            blocksList.add(new PlanetBlock(b, Material.AIR, INSIDE_AIR));
+                    }
                     else
                         blocksList.add(new PlanetBlock(b, Material.AIR, AIR));
                 }
@@ -84,22 +91,14 @@ public class Planet {
      * @param composition a list of blocks for the composition, with the lowest block first for gradient
      * @param texture the texture of the planet, either MIXED, GRADIENT or BLOB
      */
-    public void baseMaterials(Material overlay, Material underlay, Material[] composition, String texture) {
+    public void baseMaterials(Material overlay, Material underlay, Material[] composition, Material _cave, Biome _biome, String texture) {
         o = overlay;
         u = underlay;
         c = composition;
+        cave = _cave;
+        biome = _biome;
 
-        for (int i = blocks.length - 1; i >= 0; i--) {
-            if (i + (rad * 2 + 1) < blocks.length) {
-                int t = blocks[i + (rad * 2 + 1)].getType();
-                if (t == 3 && blocks[i].getType() == 2)
-                    blocks[i].setType(0);
-                else if (t == 0)
-                    blocks[i].setType(1);
-            }
-            else if (blocks[i].getType() == 2)
-                blocks[i].setType(0);
-        }
+        setTypes();
 
         double bound = 1d / (double) c.length;
         double length = rad * 2 + 1, bounds = length / (double) (3 * c.length - 1);
@@ -118,6 +117,8 @@ public class Planet {
             for (PlanetBlock b : blocks) {
                 if (b.getType() == SOLID)
                     b.setBlockType(c[0]);
+
+                b.getBlock().setBiome(biome);
             }
 
             for (int i = 1; i < c.length; i++) {
@@ -196,7 +197,7 @@ public class Planet {
                                     if (Math.random() > value)
                                         b.setBlockType(c[(int) ((i - 1) / 3d)]);
                                     else
-                                        b.setBlockType(c[(int) ((i - 1) / 3d)]);
+                                        b.setBlockType(c[(int) ((i + 1.7) / 3d)]);
                                 }
                                 else {
                                     if (Math.random() > value)
@@ -209,11 +210,35 @@ public class Planet {
                     }
                 }
             }
+            else if (b.getType() == INSIDE_AIR)
+                b.setBlockType(cave);
             else if (b.getType() == AIR)
                 b.setBlockType(Material.AIR);
         }
     }
 
+    /**
+     * Set the types of the overlay and underlay blocks
+     */
+    private void setTypes() {
+        for (int i = blocks.length - 1; i >= 0; i--) {
+            if (i + (rad * 2 + 1) < blocks.length) {
+                int t = blocks[i + (rad * 2 + 1)].getType();
+                if (t == AIR && blocks[i].getType() == SOLID)
+                    blocks[i].setType(OVERLAY);
+                else if (t == OVERLAY)
+                    blocks[i].setType(UNDERLAY);
+                else if (t == INSIDE_AIR && blocks[i].getType() == SOLID && cave == Material.AIR)
+                    blocks[i].setType(OVERLAY);
+            }
+            else if (blocks[i].getType() == SOLID)
+                blocks[i].setType(OVERLAY);
+        }
+    }
+
+    /**
+     * Get the array index of a specified block in the region
+     */
     public int getIndex(Block block) {
         int diffX = Math.abs(block.getX() - (centerBlock.getX() - rad));
         int diffY = Math.abs(block.getY() - (centerBlock.getY() - rad));

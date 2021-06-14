@@ -27,14 +27,16 @@ public class PlanetCMD implements CommandExecutor {
             c[i] = Material.valueOf(mats[i].toUpperCase());
         }
 
-        String gradient = args[4].toUpperCase();
+        Material cave = Material.valueOf(args[4]);
+
+        String gradient = args[5].toUpperCase();
 
         Block bl = ((Player) sender).getTargetBlock(100);
         assert bl != null;
 
         Planet planet = new Planet(bl, radius);
 
-        planet.baseMaterials(overlay, underlay, c, gradient);
+        planet.baseMaterials(overlay, underlay, c, cave, gradient);
 
         return true;
     }
