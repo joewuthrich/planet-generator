@@ -12,27 +12,8 @@ The planets are generated in the following way:
  
  
 ## Planet Presets
-Planets can also be generated from a config of presets. 
+Planets can also be generated from a config of presets, which have block values and their respective percentage chance to be selected for that parameter. 
 
 The config can also store subclasses, so you can group presets together under one name.
-
-`textures:
-  red:
-    inherit: ''
-    overlay:
-    - RED_CONCRETE_POWDER%15
-    - FIRE_CORAL_BLOCK
-    underlay:
-    - RED_CONCRETE
-    material:
-    - BRICKS
-    cave:
-    - AIR%90
-    - LAVA%7
-    - RED_STAINED_GLASS%3
-    biome:
-    - BADLANDS
-    texture:
-    - BLOB`
 
 https://user-images.githubusercontent.com/62530039/121898765-d7c8de80-cd77-11eb-9c68-f16e098a2dac.mp4
