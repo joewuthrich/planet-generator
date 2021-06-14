@@ -117,8 +117,6 @@ public class Planet {
             for (PlanetBlock b : blocks) {
                 if (b.getType() == SOLID)
                     b.setBlockType(c[0]);
-
-                b.getBlock().setBiome(biome);
             }
 
             for (int i = 1; i < c.length; i++) {
@@ -154,6 +152,8 @@ public class Planet {
         }
 
         for (PlanetBlock b : blocks) {
+            b.getBlock().setBiome(biome);
+
             if (b.getType() == OVERLAY)
                 b.setBlockType(o);
             else if (b.getType() == UNDERLAY)
@@ -214,6 +214,7 @@ public class Planet {
                 b.setBlockType(cave);
             else if (b.getType() == AIR)
                 b.setBlockType(Material.AIR);
+
         }
     }
 
