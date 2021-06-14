@@ -11,5 +11,5 @@ commands:
     usage: /dg [roomCount] [circleX] [circleY] [minRoomLength] [maxRoomLength] [height]
     aliases: dg
   planetgenerator:
-    usage: /pg [x] [y] [z] [radius]
+    usage: /pg [radius] [overlay] [underlay] [block,list,comma,seperated] [gradient (true/false)]
     aliases: pg

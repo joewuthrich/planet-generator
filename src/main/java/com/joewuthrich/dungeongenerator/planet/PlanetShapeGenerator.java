@@ -1,5 +1,7 @@
 package com.joewuthrich.dungeongenerator.planet;
 
+import com.joewuthrich.dungeongenerator.planet.objects.Planet;
+import com.joewuthrich.dungeongenerator.planet.objects.PlanetBlock;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -11,12 +13,18 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PlanetShapeGenerator {
-    public static List<Block> generatePlanetShape(Block block, int rad) {
+    /**
+     * Generate the initial blocks for a planet using simplex noise.
+     * @param block the center block
+     * @param rad the radius
+     * @return the planet object
+     */
+    public static Planet generatePlanetShape(Block block, int rad) {
         final double FREQUENCY = 0.5, AMPLITUDE = 20d;
         final World WORLD = Bukkit.getServer().getWorld("world");
         assert WORLD != null;
 
-        List<Block> blocks = new ArrayList<>();
+        List<PlanetBlock> blocks = new ArrayList<>();
 
         double xSeed = ThreadLocalRandom.current().nextDouble();
         double ySeed = ThreadLocalRandom.current().nextDouble();
@@ -42,12 +50,16 @@ public class PlanetShapeGenerator {
 
                     double noise = AMPLITUDE * SimplexNoiseGenerator.getNoise(dx, dy, dz);
 
+                    Block b = WORLD.getBlockAt(x + bx, y + by, z + bz);
+
                     if (!(dist + dist * noise <= radSqr) && (Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2) < radSqr))
-                        blocks.add(WORLD.getBlockAt(x + bx, y + by, z + bz));
+                        blocks.add(new PlanetBlock(b, Material.BLACK_CONCRETE, 2));
+                    else
+                        blocks.add(new PlanetBlock(b, Material.AIR, 3));
                 }
             }
         }
 
-        return blocks;
+        return new Planet(blocks, rad, block.getY());
     }
 }
