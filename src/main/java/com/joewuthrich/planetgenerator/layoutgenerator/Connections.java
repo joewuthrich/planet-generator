@@ -1,6 +1,6 @@
-package com.joewuthrich.dungeongenerator.layoutgenerator;
+package com.joewuthrich.planetgenerator.layoutgenerator;
 
-import com.joewuthrich.dungeongenerator.layoutgenerator.objects.*;
+import com.joewuthrich.planetgenerator.layoutgenerator.objects.*;
 
 import java.util.*;
 
