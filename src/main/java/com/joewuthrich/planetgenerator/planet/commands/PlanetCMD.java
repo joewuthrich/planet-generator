@@ -23,11 +23,12 @@ public class PlanetCMD implements CommandExecutor {
             return false;
 
         if (args.length == 0) {
-            sender.sendMessage("/pg [radius] [overlay] [underlay] [block,list,comma,seperated] [cave] [biome] [gradient (true/false)]");
+            sender.sendMessage("/pg [radius] [preset] (x) (y) (z)");
         }
 
         int radius = Integer.parseInt(args[0]);
         String preset = args[1];
+
         /*Material overlay = Material.valueOf(args[1].toUpperCase());
         Material underlay = Material.valueOf(args[2].toUpperCase());
         String[] mats = args[3].split(",");
@@ -65,12 +66,8 @@ public class PlanetCMD implements CommandExecutor {
         else
             bl = Objects.requireNonNull(Bukkit.getWorld("world")).getBlockAt(Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]));
 
-        sender.sendMessage(overlay + " " + underlay + " " + Arrays.toString(c) + " " + cave + " " + biome + " " + texture);
-
         assert bl != null;
         Planet planet = new Planet(bl, radius);
-
-        sender.sendMessage("here now");
 
         planet.baseMaterials(overlay, underlay, c, cave, biome, texture);
 
