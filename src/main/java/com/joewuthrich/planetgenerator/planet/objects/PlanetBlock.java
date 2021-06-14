@@ -28,5 +28,8 @@ public class PlanetBlock {
 
     public Block getBlock() { return b; };
 
-    public void setBlockType(Material m) { b.setType(m); }
+    public void setBlockType(Material m) {
+        prev = getBlock().getType();
+        b.setType(m);
+    }
 }

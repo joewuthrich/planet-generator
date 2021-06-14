@@ -1,6 +1,6 @@
 package com.joewuthrich.planetgenerator;
 
-import com.joewuthrich.planetgenerator.commands.PlanetCMD;
+import com.joewuthrich.planetgenerator.planet.commands.PlanetCMD;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class PlanetGenerator extends JavaPlugin {

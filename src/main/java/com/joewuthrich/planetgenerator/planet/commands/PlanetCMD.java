@@ -1,4 +1,4 @@
-package com.joewuthrich.planetgenerator.commands;
+package com.joewuthrich.planetgenerator.planet.commands;
 
 import com.joewuthrich.planetgenerator.planet.objects.Planet;
 import org.bukkit.Material;
@@ -27,7 +27,7 @@ public class PlanetCMD implements CommandExecutor {
             c[i] = Material.valueOf(mats[i].toUpperCase());
         }
 
-        boolean gradient = Boolean.parseBoolean(args[4]);
+        String gradient = args[4].toUpperCase();
 
         Block bl = ((Player) sender).getTargetBlock(100);
         assert bl != null;
