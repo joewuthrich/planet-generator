@@ -19,14 +19,12 @@ public class PlanetBlockPlacer {
             }
         }
         else {
-            double c = center, r = radius;
-
             for (Block b : blocks) {
                 int y = b.getY();
                 if (y < center - (radius / 2))
                     b.setType(mats[0]);
                 else if (y < center + (radius / 2)) {
-                    double min = center - (r / 2), max = center + (r / 2);
+                    double min = center - ((double) radius / 2), max = center + ((double) radius / 2);
                     double value = (y - min)/(max - min);
 
                     if (Math.random() > value)

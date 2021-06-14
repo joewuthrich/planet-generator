@@ -3,7 +3,6 @@ package com.joewuthrich.dungeongenerator.commands;
 import com.joewuthrich.dungeongenerator.planet.PlanetBlockLabeler;
 import com.joewuthrich.dungeongenerator.planet.PlanetBlockPlacer;
 import com.joewuthrich.dungeongenerator.planet.PlanetShapeGenerator;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
