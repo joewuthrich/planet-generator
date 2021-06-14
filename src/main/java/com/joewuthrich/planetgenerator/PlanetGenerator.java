@@ -1,16 +1,14 @@
-package com.joewuthrich.dungeongenerator;
+package com.joewuthrich.planetgenerator;
 
-import com.joewuthrich.dungeongenerator.commands.DungeonGeneratorCMD;
-import com.joewuthrich.dungeongenerator.commands.PlanetCMD;
+import com.joewuthrich.planetgenerator.commands.PlanetCMD;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class DungeonGenerator extends JavaPlugin {
+public final class PlanetGenerator extends JavaPlugin {
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         System.out.println("Online");
-        this.getCommand("dungeongenerator").setExecutor(new DungeonGeneratorCMD());
         this.getCommand("planetgenerator").setExecutor(new PlanetCMD());
     }
 

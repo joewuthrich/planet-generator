@@ -1,4 +1,4 @@
-package com.joewuthrich.dungeongenerator.layoutgenerator.objects;
+package com.joewuthrich.planetgenerator.layoutgenerator.objects;
 
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;

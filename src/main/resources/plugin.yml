@@ -1,15 +1,11 @@
-name: DungeonGenerator
+name: PlanetGenerator
 version: ${project.version}
-main: com.joewuthrich.dungeongenerator.DungeonGenerator
+main: com.joewuthrich.planetgenerator.PlanetGenerator
 api-version: 1.16
 authors: [ joewuthrich ]
-description: Generate a random dungeon in Minecraft with rooms and passageways.
+description: Generate a random planet.
 
 commands:
-  dungeongenerator:
-    description: The basic DungeonGenerator comand
-    usage: /dg [roomCount] [circleX] [circleY] [minRoomLength] [maxRoomLength] [height]
-    aliases: dg
   planetgenerator:
     usage: /pg [radius] [overlay] [underlay] [block,list,comma,seperated] [gradient (true/false)]
     aliases: pg

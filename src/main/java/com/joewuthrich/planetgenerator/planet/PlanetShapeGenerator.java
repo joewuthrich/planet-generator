@@ -1,7 +1,7 @@
-package com.joewuthrich.dungeongenerator.planet;
+package com.joewuthrich.planetgenerator.planet;
 
-import com.joewuthrich.dungeongenerator.planet.objects.Planet;
-import com.joewuthrich.dungeongenerator.planet.objects.PlanetBlock;
+import com.joewuthrich.planetgenerator.planet.objects.Planet;
+import com.joewuthrich.planetgenerator.planet.objects.PlanetBlock;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;

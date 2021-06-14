@@ -1,7 +1,7 @@
-package com.joewuthrich.dungeongenerator.commands;
+package com.joewuthrich.planetgenerator.commands;
 
-import com.joewuthrich.dungeongenerator.planet.PlanetShapeGenerator;
-import com.joewuthrich.dungeongenerator.planet.objects.Planet;
+import com.joewuthrich.planetgenerator.planet.PlanetShapeGenerator;
+import com.joewuthrich.planetgenerator.planet.objects.Planet;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
