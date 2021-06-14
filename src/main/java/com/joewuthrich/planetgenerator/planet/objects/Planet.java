@@ -1,24 +1,80 @@
 package com.joewuthrich.planetgenerator.planet.objects;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
+import org.bukkit.util.noise.SimplexNoiseGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Planet {
+    private final int OVERLAY = 0, UNDERLAY = 1, SOLID = 2, AIR = 3;
+
     Material o;
     Material u;
     Material[] c;
+
+    Biome biome;
 
     List<PlanetBlock> blocks;
 
     int rad;
     int centerY;
 
-    public Planet(List<PlanetBlock> _blocks, int radius, int _centerY) {
-        blocks = _blocks;
+    /**
+     * Generate a planet
+     * @param block the center block
+     * @param radius the radius of the planet
+     */
+    public Planet(Block block, int radius) {
+        final double FREQUENCY = 0.5, AMPLITUDE = 20d;
+        final World WORLD = block.getWorld();
+
         rad = radius;
-        centerY = _centerY;
+
+        blocks = new ArrayList<>();
+
+        double xSeed = ThreadLocalRandom.current().nextDouble();
+        double ySeed = ThreadLocalRandom.current().nextDouble();
+        double zSeed = ThreadLocalRandom.current().nextDouble();
+
+        int bx = block.getX(), by = block.getY(), bz = block.getZ();
+
+        centerY = by;
+
+        double distortion = FREQUENCY / 10;
+
+        int radSqr = rad * rad;
+
+        for (int x = -rad; x <= rad; x++) {
+            double dx = xSeed + x * distortion;
+            double xDist = x * x;
+
+            for (int y = -rad; y <= rad; y++) {
+                double dy = ySeed + y * distortion;
+                double yDist = y * y + xDist;
+
+                for (int z = -rad; z <= rad; z++) {
+                    double dz = zSeed + z * distortion;
+                    double dist = z * z + yDist;
+
+                    double noise = AMPLITUDE * SimplexNoiseGenerator.getNoise(dx, dy, dz);
+
+                    Block b = WORLD.getBlockAt(x + bx, y + by, z + bz);
+
+                    if (!(dist + dist * noise <= radSqr) && (Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2) < radSqr))
+                        blocks.add(new PlanetBlock(b, Material.BLACK_CONCRETE, SOLID));
+                    else
+                        blocks.add(new PlanetBlock(b, Material.AIR, AIR));
+                }
+            }
+        }
     }
+
 
     /**
      * Set the types of all the blocks in the planet
@@ -49,11 +105,11 @@ public class Planet {
         int minY = centerY - rad;
 
         for (PlanetBlock b : blocks) {
-            if (b.getType() == 0)
+            if (b.getType() == OVERLAY)
                 b.setBlockType(o);
-            else if (b.getType() == 1)
+            else if (b.getType() == UNDERLAY)
                 b.setBlockType(u);
-            else if (b.getType() == 2) {
+            else if (b.getType() == SOLID) {
                 if (!gradient) {
                     double rand = Math.random();
 
@@ -104,6 +160,9 @@ public class Planet {
                         }
                     }
                 }
+            }
+            else if (b.getType() == AIR) {
+                b.setBlockType(Material.AIR);
             }
         }
     }
