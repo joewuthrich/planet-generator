@@ -8,9 +8,9 @@ The planets are generated in the following way:
 - Texture the sphere according to parameters
 
 ![2021-06-14_21 30 21](https://user-images.githubusercontent.com/62530039/121871224-fb7c2c80-cd57-11eb-9699-8f97c53aa5e4.png)
-
-
-
+ 
+ 
+ 
 ## Planet Presets
 Planets can also be generated from a config of presets. 
 
