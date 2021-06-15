@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class PlanetCMD implements CommandExecutor {
@@ -43,19 +44,28 @@ public class PlanetCMD implements CommandExecutor {
 
         PlanetGenerator.plugin.reloadConfig();
 
-        FileConfiguration config = PlanetGenerator.plugin.getConfig();
+        FileConfiguration config = PlanetGenerator.textures;
 
-        Material overlay = Material.valueOf(ChooseRandom.chooseRandom(config.getStringList("textures." + preset + ".overlay"), 1).get(0));
-        Material underlay = Material.valueOf(ChooseRandom.chooseRandom(config.getStringList("textures." + preset + ".underlay"), 1).get(0));
-        String[] mats = ChooseRandom.chooseRandom(config.getStringList("textures." + preset + ".material"), 2).toArray(new String[0]);
+        List<String> subClasses = config.getStringList(preset + ".subclasses");
+
+        while (subClasses.size() > 0) {
+            preset = ChooseRandom.chooseRandom(subClasses, 1).get(0);
+            subClasses = config.getStringList(preset + ".subclasses");
+        }
+
+        int num = 2 + (int) Math.round(((double) radius / 8) * Math.random());
+
+        Material overlay = Material.valueOf(ChooseRandom.chooseRandom(config.getStringList(preset + ".overlay"), 1).get(0));
+        Material underlay = Material.valueOf(ChooseRandom.chooseRandom(config.getStringList(preset + ".underlay"), 1).get(0));
+        String[] mats = ChooseRandom.chooseRandom(config.getStringList(preset + ".material"), num).toArray(new String[0]);
         System.out.println(Arrays.toString(mats));
         Material[] c = new Material[mats.length];
         for (int i = 0; i < mats.length; i++) {
             c[i] = Material.valueOf(mats[i].toUpperCase());
         }
-        Material cave = Material.valueOf(ChooseRandom.chooseRandom(config.getStringList("textures." + preset + ".cave"), 1).get(0));
-        Biome biome = Biome.valueOf(ChooseRandom.chooseRandom(config.getStringList("textures." + preset + ".biome"), 1).get(0));
-        String texture = ChooseRandom.chooseRandom(config.getStringList("textures." + preset + ".texture"), 1).get(0);
+        Material cave = Material.valueOf(ChooseRandom.chooseRandom(config.getStringList(preset + ".cave"), 1).get(0));
+        Biome biome = Biome.valueOf(ChooseRandom.chooseRandom(config.getStringList(preset + ".biome"), 1).get(0));
+        String texture = ChooseRandom.chooseRandom(config.getStringList(preset + ".texture"), 1).get(0);
 
         //https://random-word-api.herokuapp.com/word?number=1
 
