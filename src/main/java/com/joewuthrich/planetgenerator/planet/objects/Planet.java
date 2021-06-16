@@ -1,5 +1,6 @@
 package com.joewuthrich.planetgenerator.planet.objects;
 
+import com.joewuthrich.planetgenerator.planet.utils.GenerateName;
 import org.apache.commons.lang.RandomStringUtils;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -13,6 +14,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Planet {
     private final int OVERLAY = 0, UNDERLAY = 1, SOLID = 2, AIR = 3, INSIDE_AIR = 4;
+
+    String name;
 
     Block centerBlock;
 
@@ -33,7 +36,7 @@ public class Planet {
      * @param radius the radius of the planet
      */
     public Planet(Block block, int radius) {
-        System.out.println(RandomStringUtils.randomAlphabetic(5).toUpperCase() + RandomStringUtils.randomNumeric(8));
+        name = GenerateName.generateName();
 
         final double FREQUENCY = 0.5, AMPLITUDE = 20d;
         final World WORLD = block.getWorld();
@@ -249,4 +252,9 @@ public class Planet {
 
         return diffZ + (diffY * dist) + (diffX * dist * dist);
     }
+
+    /**
+     * Get the name of the planet
+     */
+    public String getName() { return name; }
 }

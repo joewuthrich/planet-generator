@@ -4,6 +4,7 @@ import com.joewuthrich.planetgenerator.PlanetGenerator;
 import com.joewuthrich.planetgenerator.planet.objects.Planet;
 import com.joewuthrich.planetgenerator.planet.utils.ChooseRandom;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -67,8 +68,6 @@ public class PlanetCMD implements CommandExecutor {
         Biome biome = Biome.valueOf(ChooseRandom.chooseRandom(config.getStringList(preset + ".biome"), 1).get(0));
         String texture = ChooseRandom.chooseRandom(config.getStringList(preset + ".texture"), 1).get(0);
 
-        //https://random-word-api.herokuapp.com/word?number=1
-
         Block bl;
 
         if (args.length == 2)
@@ -78,6 +77,8 @@ public class PlanetCMD implements CommandExecutor {
 
         assert bl != null;
         Planet planet = new Planet(bl, radius);
+
+        sender.sendMessage(ChatColor.GRAY + "The planet " + ChatColor.WHITE + ChatColor.BOLD + planet.getName() + ChatColor.GRAY + " has appeared.");
 
         planet.baseMaterials(overlay, underlay, c, cave, biome, texture);
 
