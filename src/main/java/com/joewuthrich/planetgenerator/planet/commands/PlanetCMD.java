@@ -15,7 +15,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,12 +58,11 @@ public class PlanetCMD implements CommandExecutor {
         Material overlay = Material.valueOf(ChooseRandom.chooseRandom(config.getStringList(preset + ".overlay"), 1).get(0));
         Material underlay = Material.valueOf(ChooseRandom.chooseRandom(config.getStringList(preset + ".underlay"), 1).get(0));
         String[] mats = ChooseRandom.chooseRandom(config.getStringList(preset + ".material"), num).toArray(new String[0]);
-        System.out.println(Arrays.toString(mats));
         Material[] c = new Material[mats.length];
-        for (int i = 0; i < mats.length; i++) {
+        for (int i = 0; i < mats.length; i++)
             c[i] = Material.valueOf(mats[i].toUpperCase());
-        }
         Material cave = Material.valueOf(ChooseRandom.chooseRandom(config.getStringList(preset + ".cave"), 1).get(0));
+        Material topDecoration = Material.valueOf(ChooseRandom.chooseRandom(config.getStringList(preset + ".topdecoration"), 1).get(0));
         Biome biome = Biome.valueOf(ChooseRandom.chooseRandom(config.getStringList(preset + ".biome"), 1).get(0));
         String texture = ChooseRandom.chooseRandom(config.getStringList(preset + ".texture"), 1).get(0);
 
@@ -80,7 +78,7 @@ public class PlanetCMD implements CommandExecutor {
 
         sender.sendMessage(ChatColor.GRAY + "The planet " + ChatColor.WHITE + ChatColor.BOLD + planet.getName() + ChatColor.GRAY + " has appeared.");
 
-        planet.baseMaterials(overlay, underlay, c, cave, biome, texture);
+        planet.baseMaterials(overlay, underlay, c, cave, topDecoration, biome, texture);
 
         return true;
     }

@@ -1,7 +1,6 @@
 package com.joewuthrich.planetgenerator.planet.objects;
 
 import com.joewuthrich.planetgenerator.planet.utils.GenerateName;
-import org.apache.commons.lang.RandomStringUtils;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Planet {
-    private final int OVERLAY = 0, UNDERLAY = 1, SOLID = 2, AIR = 3, INSIDE_AIR = 4;
+    private final int OVERLAY = 0, UNDERLAY = 1, SOLID = 2, AIR = 3, INSIDE_AIR = 4, TOP_DECORATION = 5;
 
     String name;
 
@@ -94,7 +93,7 @@ public class Planet {
      * @param composition a list of blocks for the composition, with the lowest block first for gradient
      * @param texture the texture of the planet, either MIXED, GRADIENT or BLOB
      */
-    public void baseMaterials(Material overlay, Material underlay, Material[] composition, Material _cave, Biome _biome, String texture) {
+    public void baseMaterials(Material overlay, Material underlay, Material[] composition, Material _cave, Material topDecoration, Biome _biome, String texture) {
         o = overlay;
         u = underlay;
         c = composition;
@@ -215,9 +214,14 @@ public class Planet {
             }
             else if (b.getType() == INSIDE_AIR)
                 b.setBlockType(cave);
-            else if (b.getType() == AIR)
+            else if (b.getType() == AIR) {
                 b.setBlockType(Material.AIR);
-
+            }
+            else if (b.getType() == TOP_DECORATION) {
+                if (Math.random() > 0.9) {
+                    b.setBlockTypeNoWaterlog(topDecoration);
+                }
+            }
         }
     }
 
@@ -228,17 +232,19 @@ public class Planet {
         for (int i = blocks.length - 1; i >= 0; i--) {
             if (i + (rad * 2 + 1) < blocks.length) {
                 int t = blocks[i + (rad * 2 + 1)].getType();
-                if (t == AIR && blocks[i].getType() == SOLID)
+                if ((t == AIR || (t == INSIDE_AIR && cave == Material.AIR)) && blocks[i].getType() == SOLID)
                     blocks[i].setType(OVERLAY);
                 else if (t == OVERLAY)
                     blocks[i].setType(UNDERLAY);
-                else if (t == INSIDE_AIR && blocks[i].getType() == SOLID && cave == Material.AIR)
-                    blocks[i].setType(OVERLAY);
+
+                if ((t == AIR || (t == INSIDE_AIR && cave == Material.AIR)) && blocks[i].getType() == OVERLAY)
+                    blocks[i + (rad * 2 + 1)].setType(TOP_DECORATION);
             }
             else if (blocks[i].getType() == SOLID)
                 blocks[i].setType(OVERLAY);
         }
     }
+
 
     /**
      * Get the array index of a specified block in the region
