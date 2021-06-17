@@ -7,15 +7,15 @@ The planets are generated in the following way:
 - Generate the sphere, and remove caves according to simplex noise
 - Texture the sphere according to parameters
 
-![2021-06-14_21 30 21](https://user-images.githubusercontent.com/62530039/121871224-fb7c2c80-cd57-11eb-9699-8f97c53aa5e4.png)
+![2021-06-17_19 24 40](https://user-images.githubusercontent.com/62530039/122360108-3f667000-cfaa-11eb-8b67-71cb028e4504.png)
+
  
  
- 
+
 ## Planet Presets
 Planets can also be generated from a config of presets, which have block values and their respective percentage chance to be selected for that parameter. 
 
 The config can also store subclasses, so you can group presets together under one name.
 
-https://user-images.githubusercontent.com/62530039/122054268-9f8ad400-ce3b-11eb-8259-e45f2081abfe.mp4
-
+https://user-images.githubusercontent.com/62530039/122359847-07f7c380-cfaa-11eb-9f17-c9ecb2091747.mp4
 
