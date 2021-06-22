@@ -3,7 +3,7 @@ A way to generate random planets in minecraft, with a number of different settin
 
 ## Planet Generation
 The planets are generated in the following way:
-- Get parameters: [radius] [overlay] [underlay] [comma,seperated,material,list] [cave] [biome] [mixed/gradient/blob]
+- Get parameters: [radius] [preset]
 - Generate the sphere, and remove caves according to simplex noise
 - Texture the sphere according to parameters
 
