@@ -1,5 +1,5 @@
 # Planet Generator
-A way to generate random planets in minecraft, with a number of different settings.
+A way to generate random planets in Minecraft, with a number of different settings.
 
 ## Planet Generation
 The planets are generated in the following way:
